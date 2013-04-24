@@ -22,7 +22,6 @@ rooms = None
 commands = cs.CommandWords()
 parser = p.Parser()
 
-
 def play():
     init()
     while True:
