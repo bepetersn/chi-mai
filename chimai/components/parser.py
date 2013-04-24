@@ -96,10 +96,10 @@ class Parser:
     def build_valid_sentence_tree(self, multiply_tagged_tokens):
         logging.info("multiply_tagged_tokens: %s", multiply_tagged_tokens)
         tagsets = [word[1] for word in multiply_tagged_tokens]
-          logging.info("tagsets: %s", tagsets)
+        logging.info("tagsets: %s", tagsets)
 
-          tagset_lengths = self.get_tagset_lengths(tagsets)
-          logging.info("tagset lengths: %s", tagset_lengths)
+        tagset_lengths = self.get_tagset_lengths(tagsets)
+        logging.info("tagset lengths: %s", tagset_lengths)
 
         working = [0 for tagset in tagset_lengths]
         logging.info("working: %s", working)
@@ -204,12 +204,14 @@ class Parser:
                         logging.info("now we're gonna return the current working combination")
                         working[i] += 1
                         return working
-                logging.info("every index was %d", x)
-                logging.info(", so we'll check the next highest integer.")
-                x += 1
-                
-            logging.info("working: %s", working)
-            return working
+            
+            logging.info("every index was higher than %d", x)
+            logging.info(", so we'll check the next highest integer.")
+            x += 1
+            
+            #NOTE: these lines were here, but I don't see what their purpose could be.
+            #logging.info("working: %s", working)
+            #return working
 
     def find_possible_tags(self, tagsets, working):
 
@@ -290,7 +292,7 @@ class Parser:
         return new_mtt
 
     def backtrack(self, backstack, multiply_tagged_tokens, old_working, 
-    	tagsets, tagset_lengths, working):
+    	    tagsets, tagset_lengths, working):
 
         try:
             logging.info("here's our backstack: %s", backstack)
