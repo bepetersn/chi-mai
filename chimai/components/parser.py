@@ -242,11 +242,11 @@ class Parser:
             rule = self.matches_any_rules(possible_tags)
             if not rule:
                 logging.info("no match, dropping leftmost tag")
-                    possible_tags = possible_tags[1:]
-                    if len(possible_tags) == 0:
-                        logging.info("nope, no matching rule")
-                        logging.info("try a different tagset")
-                        return None
+                possible_tags = possible_tags[1:]
+                if len(possible_tags) == 0:
+                    logging.info("nope, no matching rule")
+                    logging.info("try a different tagset")
+                    return None
             else:
                 logging.info("found a rule that matches")
                 logging.info("getting slightly closer parse")
@@ -383,9 +383,9 @@ class Parser:
                 verb_index = i
                 if verb and i != verb_index:
                     if tag in obj_pos:
-                    logging.info("it's a noun!")
-                    object = token
-                    obj_index = i
+                        logging.info("it's a noun!")
+                        object = token
+                        obj_index = i
             if verb and i == 0 and len(singly_tagged_tokens) == 1:
                 return verb, None
 
