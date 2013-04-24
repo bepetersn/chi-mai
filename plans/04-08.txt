@@ -1,0 +1,25 @@
+I've realized, arguably a bit late, that I don't know exactly what I want my parse() method to do.
+But now I'm thinking really hard about it. Here's what I've come up with:
+Before I parse, I've just assembled tagged tokens.
+After I parse, I am working with the names of the verb and object that were contained within my sentence.
+What comes in between? I have to identify, given tagged tokens, i.e. parts of speech, 
+the verb and the object in the sentence.
+Thinking about it, I have another goal besides finding the verb and object.
+That is, I want to make sure that any sentence I successfully parse is of a certain form.
+And it is precisely that form that I will then exploit to FIND the verb and object(s).
+
+In other words, this is the plan:
+1) Search through the tags of the tokens and try to match it to a rule.
+2) Compound together all the rules until I have just a sentence.
+3) Then take that set of rules I have compiled, to interpret the tokens, and thereby to find verb and object.
+
+That's the general outline. However, at #3, I am uncertain.
+
+Do I need the parsed sentence object itself AND the set of rules?
+Or can I get by with just the rules and the original tokens?
+
+If the former, then I need to make sure the parse method perfectly constructs the parsed sentence object.
+If the latter, then that result doesn't really matter, and can be discarded.
+
+I think the best course of action would be to go all the way through with an example of what I need to do.
+If I do it algorithmically and with enough care, perhaps it will become clear what and how much work I need to put into the parse() method.

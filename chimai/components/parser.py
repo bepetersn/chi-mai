@@ -1,0 +1,418 @@
+import nltk
+import json
+import logging 
+import collections
+
+import components.commands as cs
+import objects.command as c
+
+from errors import QuitException, HelpException, \
+		FailedParseException, UnknownWordException, \
+		NoCommandException, UnknownCommandException
+
+logging.basicConfig(format='%(levelname)s: %(message)s', 
+	filename='../logs/chimai.log', filemode='w', level=logging.DEBUG)
+
+class Parser:
+	
+	def __init__(self):
+		self.vocab = {}
+		self.actions = []
+		self.binder = None
+		self.commands = cs.CommandWords()
+
+		self.rules = collections.OrderedDict()
+
+		self.rules[tuple(('V', 'OBJ'))] = tuple(('S',))
+		self.rules[tuple(('V', 'PP'))] = tuple(('S',))
+
+		self.rules[tuple(('N',))] = tuple(('OBJ',))
+		self.rules[tuple(('NP',))] = tuple(('OBJ',))
+
+		self.rules[tuple(('DET', 'OBJ'))] = tuple(('OBJ',))
+		self.rules[tuple(('ADJ', 'OBJ'))] = tuple(('OBJ',))
+
+		self.rules[tuple(('TO', 'OBJ'))] = tuple(('PP',))
+		self.rules[tuple(('P', 'OBJ'))] = tuple(('PP',))
+
+		self.rules[tuple(('N', 'N'))] = tuple(('OBJ',))
+		self.rules[tuple(('V',))] = tuple(('S',))
+		self.rules[tuple(('V', 'ADV'))] = tuple(('S',))
+
+		with open('../vocab/part_of_speech.json') as f:
+			json_string = f.read()
+
+		self.vocab = json.loads(json_string)
+
+	def get_command(self):
+		line = raw_input().lower()
+		tokens = self.tokenize(line)
+		tagged_tokens = self.parse(tokens)
+		verb, object_name = self.find_verb_and_object(tagged_tokens)
+		action = self.get_action(verb)
+		object = self.get_object(object_name, action[0])
+		logging.debug("verb: %s, object: %s" % (verb, object))
+		return c.Command(verb, action[1], object)
+
+	def tokenize(self, line):
+		line = self.depunctuate(line)
+		line = line.strip().split(" ")
+		return line 
+
+	""" stupidly fails with more than one punctuation mark in a command... """
+	def depunctuate(self, line):
+		for i, char in enumerate(line):
+			if char in '.,?!:;':
+				line = (line[:i] + line[i+1:])
+		return line
+
+	def parse(self, tokens):
+		if len(tokens) == 1:
+			if tokens[0] == 'quit':
+				raise QuitException
+			if tokens[0] == 'help':
+				raise HelpException
+		multiply_tagged_tokens = self.tag(tokens)
+		tree = self.build_valid_sentence(multiply_tagged_tokens)
+		return self.unpack_tree(tree)
+
+	def tag(self, tokens):
+		tagged_tokens = [self.find_all_tags(token) for token in tokens]
+		return tagged_tokens
+
+	def find_all_tags(self, token):
+		try:
+			if not token:
+				raise NoCommandException
+			elif token[0].isalpha():
+				tags = self.vocab[token[0]][token]
+			else:
+				tags = self.vocab['.'][token]
+			tags = sorted(tags, key=lambda t: t[1], reverse=True)
+			return (token, [str(tag[0]) for tag in tags])
+		except KeyError:
+			raise UnknownWordException(token)
+
+  	def build_valid_sentence(self, multiply_tagged_tokens):
+  		
+  		logging.info("multiply_tagged_tokens: %s", multiply_tagged_tokens)
+
+  		tagsets = [word[1] for word in multiply_tagged_tokens]
+  		logging.info("tagsets: %s", tagsets)
+
+  		tagset_lengths = self.get_tagset_lengths(tagsets)
+  		logging.info("tagset lengths: %s", tagset_lengths)
+
+		working = [0 for tagset in tagset_lengths]
+		logging.info("working: %s", working)
+
+		old_working = []
+		logging.info("old working: %s", old_working)
+
+		backstack = []
+		logging.info("back stack: %s", backstack)
+
+		while True:
+
+			logging.info("starting loopy-loop")
+
+			while True:
+
+				logging.info("finding a possible tag combination")
+				possible_tags = self.find_possible_tags(tagsets, working)
+
+				logging.info("multiply tagged tokens: %s", multiply_tagged_tokens)
+				logging.info("we're going to try to get a better parse")
+
+				logging.info("entering mtt into backstack: %s", backstack)
+				backstack.append((multiply_tagged_tokens, working))
+
+				reduced = self.try_to_reduce(possible_tags, multiply_tagged_tokens)
+				if reduced:
+
+					logging.info("backstack: %s", backstack)
+					logging.info("we found a slightly closer parse: %s", reduced)
+					logging.info("we're going to reset our iterations over the tagsets.")
+					
+					tagsets = [word[1] for word in reduced]
+					logging.info("tagsets: %s", tagsets)
+
+					tagset_lengths = self.get_tagset_lengths(tagsets)
+					logging.info("tagset lengths: %s", tagset_lengths)  
+
+					old_working = working
+					logging.info("old working: %s", old_working)  
+
+					working = [0 for tagset in tagset_lengths]
+					logging.info("new working: %s", working) 
+
+					multiply_tagged_tokens = reduced
+					logging.info("mtt: %s", multiply_tagged_tokens)
+
+					break
+
+				else:
+
+					logging.info("we didn't find a slightly closer parse.")
+					logging.info("we're going to go further into our tagsets, and generate the next working.")
+					working = self.create_working(tagset_lengths, working)
+
+					while not working:
+
+						logging.info("shoot, we've tried every possible combination!")
+						logging.info("we have to backtrack!")
+
+						backstack = self.backtrack(backstack, multiply_tagged_tokens, old_working, 
+							tagsets, tagset_lengths, working)
+
+			if reduced[0][1] == tuple('S'):
+				logging.info("we have successfully parsed a sentence!")
+				return reduced[0]
+
+	def get_tagset_lengths(self, tagsets):
+		tagset_lengths = []
+		num_words = len(tagsets)
+
+		for i in range(num_words):
+			tagset_lengths.append(len(tagsets[i]))
+
+		return tagset_lengths
+
+	def create_working(self, tagset_lengths, working):
+
+		logging.info("generating a possible tag combination for a set of words.")
+		logging.info("length of each tagset: %s", tagset_lengths)
+
+		num_words = len(tagset_lengths)
+
+		logging.info("num words, and thus tags needed: %d", num_words)
+		logging.info("last combination of tags used, by indices: %s", working)
+		
+		x = 0
+		
+		while True:
+			for i in sorted(range(num_words), reverse=True):
+				logging.info("index to expect: %d", x)
+				logging.info("word we're at: #%d", i+1)
+
+				if working[i] == x:
+
+					logging.info("this word's tag index is %d", x)
+					logging.info("so we're gonna increment it by one.")
+					logging.info("unless to do so would be creating an impossible combination...")
+
+					if (tagset_lengths[i] == working[i]+1):
+						if i == 0:
+							logging.info("it's impossible!")
+							return None
+						else:
+							logging.info("gonna try to increment the next word")
+							continue
+					else:
+						logging.info("successfully incremented.")
+						logging.info("now we're gonna return the current working combination")
+						working[i] += 1
+						return working
+			logging.info("every index was %d", x)
+			logging.info(", so we'll check the next highest integer.")
+			x += 1
+		
+		logging.info("working: %s", working)
+		return working
+
+	def find_possible_tags(self, tagsets, working):
+
+		possible_tags = []
+
+		for i, tagset in enumerate(tagsets):
+
+			logging.info("word #: %d", i+1)
+			logging.info("tags for the word: %s", tagset)
+
+			possible_tags.append(tagset[working[i]])
+			
+			logging.info("select next tag from above tags")
+			logging.info("tag #: %d", working[i]+1)
+			logging.info("tag: %s", tagset[working[i]])
+
+		logging.info("tagset we're using this time: %s", possible_tags)
+		return possible_tags
+
+	def try_to_reduce(self, possible_tags, multiply_tagged_tokens):
+
+		logging.info("we're gonna check against rules;")
+		logging.info("if it matches any, we'll return the reduced tagged tokens;")
+		logging.info("if it doesn't, we'll drop the leftmost tag...")
+		logging.info("until the tags are empty--then we'll try a different possible tagset.")
+
+		while True:
+			rule = self.matches_any_rules(possible_tags)
+			if not rule:
+				logging.info("no match, dropping leftmost")
+				possible_tags = possible_tags[1:]
+				if len(possible_tags) == 0:
+					logging.info("nope, no matching rule")
+					logging.info("try a different tagset")
+					return None
+			else:
+				logging.info("found a rule that matches")
+				logging.info("getting slightly closer parse")
+				return self.reduce_by_rule(multiply_tagged_tokens, rule)
+
+	def matches_any_rules(self, tags):
+		for parts, composite in self.rules.iteritems():	
+			logging.info("%s and %s", tuple(tags), parts)
+			if tuple(tags) == parts:
+				return (parts, composite)
+
+	def reduce_by_rule(self, multiply_tagged_tokens, rule):
+
+		parts = rule[0]
+		logging.info("parts of rule: %s", parts)
+		composite = rule[1]
+		logging.info("composite of rule: %s", composite)
+		end = len(parts)
+		logging.info("num tags we're replacing: %s", end)
+		length = len(multiply_tagged_tokens)
+		logging.info("num tags in the whole sentence: %s", length)
+		node = multiply_tagged_tokens[length-end:]
+		logging.info("everything we're replacing: %s", node)
+		singly_tagged_tokens = []
+
+		# doing some fancy footwork to get a copy of mtt rather than a reference to it.
+		new_mtt = multiply_tagged_tokens[:]
+
+		for i, tagged_token in enumerate(node):
+			singly_tagged = (tagged_token[0], parts[i])
+			logging.info("one singly, correctly tagged token: %s", singly_tagged)
+			singly_tagged_tokens.append(singly_tagged)
+			logging.info("added it to our list of stt's")
+		if len(singly_tagged_tokens) == 1:
+			child = (singly_tagged, composite)
+		else:
+			child = ((singly_tagged_tokens[0], singly_tagged_tokens[1]), composite)
+		logging.info("this is what we're adding to mtt in place of what we removed: %s", child)
+		for tagged_token in node:
+			new_mtt.remove(tagged_token)
+		logging.info("new mtt, after removing some stuff: %s", new_mtt)
+		new_mtt.append(child)
+		logging.info("new mtt, after adding some stuff: %s", new_mtt)
+		return new_mtt
+
+	def backtrack(self, backstack, multiply_tagged_tokens, 
+		old_working, tagsets, tagset_lengths, working):
+
+			try:
+				logging.info("here's our backstack: %s", backstack)
+				last_attempt = backstack[-2]
+				logging.info("here's our last attempt: %s", last_attempt)
+				length = len(backstack)-1
+				backstack = backstack[:length]
+				logging.info("reset backstack")
+
+			except IndexError:
+				logging.error("shoot, we've really tried EVERY possible combination!")
+				logging.error("failed to parse this sentence!")
+				raise FailedParseException
+
+			multiply_tagged_tokens = last_attempt[0]
+			logging.info("mtt: %s", multiply_tagged_tokens)
+ 						
+			old_working = last_attempt[1]
+			logging.info("old working: ", old_working)
+
+			tagsets = [word[1] for word in multiply_tagged_tokens]
+			logging.info("tagsets: %s", tagsets) 
+
+			tagset_lengths = self.get_tagset_lengths(tagsets)
+			logging.info("tagset lengths: %s", tagset_lengths)
+
+			working = self.create_working(tagset_lengths, old_working)
+			logging.info("new working: %s", working)
+
+			return backstack
+
+	def unpack_tree(self, tree):
+		singly_tagged_tokens = []
+
+		logging.info("tree: %s", tree)
+
+		logging.info("drop the rightmost tag, 'S' for 'sentence'")
+		tree = tree[0]
+
+		logging.info("tree: %s", tree)
+
+		logging.info("checking that two layers down is not a single char,")
+		logging.info("in other words, 'tree' is not a simple tuple itself.")
+		logging.warning("This will fail at a word like 'a', or 'I'")
+
+		while len(tree[0][0]) != 1:
+
+			logging.info("append the next tagged token")
+			singly_tagged_tokens.append(tree[0])
+
+			logging.info("added: %s", tree[0])
+
+			logging.info("shorten the tree")
+			tree = tree[1]
+
+			logging.info("tree: %s", tree)
+
+			logging.info("prep tree for next time by dropping rightmost tag, if there is one")
+			if len(tree[0][0]) != 1:
+				tree = tree[0] 
+
+			logging.info("tree: %s", tree)
+
+		logging.info("if tree contains anything, it is the last tagged token.")
+
+		if tree:
+
+			logging.info("so append it to the 'tagged_tokens'.")
+			singly_tagged_tokens.append(tree)
+		
+			logging.info("added: %s", tree)
+
+		logging.info(singly_tagged_tokens)
+
+		return singly_tagged_tokens
+
+	def find_verb_and_object(self, singly_tagged_tokens):
+
+		verb_pos = ['V']
+		obj_pos = ['N', 'NP']
+		verb = ""
+		object = ""
+		verb_index = 0
+		obj_index = 0
+
+		#concatenate_two_word_objects(singly_tagged_tokens)
+
+		for i, (token, tag) in enumerate(singly_tagged_tokens):
+			logging.info("%s, %s, %s", i, token, tag)
+			if (tag not in verb_pos) and (tag not in obj_pos):
+				logging.info("don't care, not a verb or noun")
+				continue
+			if tag in verb_pos:
+				logging.info("it's a verb!")
+				verb = token
+				verb_index = i
+			if verb and i != verb_index:
+				if tag in obj_pos:
+					logging.info("it's a noun!")
+					object = token
+					obj_index = i
+			if verb and i == 0 and len(singly_tagged_tokens) == 1:
+				return verb, None
+
+		return verb, object
+
+	def get_object(self, object_name, action_name):
+		if object_name:
+			return self.binder.get_object(object_name, action_name)
+
+	def get_action(self, verb):
+		for i, command in enumerate(self.commands.instance):
+			if verb == command:
+				return self.actions[i]
+		raise UnknownCommandException(verb)

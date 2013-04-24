@@ -1,0 +1,19 @@
+I have been gnawing away at the bugs in parser for days now. The methods that are most crucial at the moment
+are those that take my frequency pos tags and figure out the best fit based on a grammar. However, I have been
+thinking about this, and really, getting part of canonical part of speech tags shouldn't be that difficult.
+If I got that stage out of the way, using perhaps my own tailored part of speech tagger, I would be massively
+freed up to nail out all the other parts of my program that I am currently neglecting.
+
+Anyway, as it stands now, my parser can use words that have a most-frequent-tag that is NOT what I want. In 
+other words, I can sort out very simple ambiguities! This is very exciting, although by no means is the parser 
+great yet. I tried to extend the grammar and see if the parser kept up, but the program as a whole did not.
+However, to my credit, the part that disambiguates tags and builds a valid sentence using the grammar did succeed.
+The only problem (so far) is that my unpack_tree() method failed to unpack the longer sentences I was inputing. 
+But I think I can fix that with a couple more hours of work.
+
+The other method that may yet fail with longer, slightly more complex sentences is the verb-and-object-finder. 
+I can't say yet. 
+
+However, these later methods are small change to fix compared to that one set of disambiguating and valid-sentence-building
+functions. And I have decided that one of those functions in particular is complete crap, and will have to be much better made
+before the next iteration of those program is done, or before--that is the find_possible_tags() method. It stil fails on certain

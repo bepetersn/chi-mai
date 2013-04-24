@@ -1,0 +1,49 @@
+"go north"
+
+['go', 'north']
+
+[('go', 'V'), ('north', 'N')]
+
+V + N?
+
+No.
+
+N?
+
+Yes. 
+
+[('go', 'V'), (('north', 'N'), 'OBJ')]
+
+V + OBJ?
+
+Yes.
+
+((('go', 'V'), (('north', 'N'), 'OBJ')), 'S')
+
+S?
+
+Done.
+
+--------
+
+verb = ""
+verb_index = 0
+object = ""
+
+verb_pos = ['V']
+obj_pos = ['N', 'NP']
+
+tagged_tokens = [('go', 'V'), ('north', 'N')]
+rules_used = [('N', 'OBJ'), (('V', 'OBJ'), 'S')]
+
+for i, (tag, token) in enumerate(tagged_tokens):
+	if tag in verb_pos:
+		verb = token
+		verb_index = i
+	if tag in obj_pos:
+		if verb:
+			if i != verb_index:
+				object = token
+				object_index = i
+
+

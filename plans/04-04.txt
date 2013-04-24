@@ -1,0 +1,20 @@
+1) Reform the command and execution structure. What's going wrong right now most obviously is that the generic "unknown_command" function fires every time, in addition to the specific exceptions that I have hard-coded in. In other words, I don't want the generic blank command to have to be returned every time. I don't want to have to return a command every time at all. How do I do that?
+
+    +) One possible way is that I reform the Command class itself, using an inheritance structure of some kind. 
+    +) Additonally, why do I need a "verb" component at all? 
+
+2) Currently, I am unable to bind two-word object_names to objects, because it works based on tokens. That needs to be amended.
+
+3) Nextly, my simplistic "grammar" of verb + object can't look beyond the first most frequent tag of any given token. That has to be amended.
+
+4) More crucially for the "grammar", and perhaps in conjunction with the above, it has to be restructured to be more flexible, and able to employ lots of rules.
+
+5) In general, I need to implement these inheritance structures of:
+
+"container-> actor" "container -> room" "container -> container_item" 
+"actor-> player" " actor -> npc" 
+"item -> consumable_item" "item -> equippable_item" "item -> part_of_room" "item-> container_item"
+
+... and in general, need to proliferate these ubiquituous interfaces like "name", "description", "equippable", "consumable", "takeable", "movable", and other important forms of state, such as those a room has to embody the state of the development of the plot. 
+
+6) Need a simple script to enter new vocab into my dictionary, or at least until I get better resources.

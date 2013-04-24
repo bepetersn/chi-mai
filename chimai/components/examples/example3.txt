@@ -1,0 +1,98 @@
+'go east'
+
+['go', 'east']
+
+[('go', ('V', 'N', 'ADJ')), ('east', ('ADJ', 'N', 'V'))]
+
+-------
+
+V + ADJ?
+
+No.
+
+ADJ?
+
+No.
+-------
+
+N + ADJ?
+
+No.
+
+ADJ?
+
+No.
+
+-------
+
+N + N?
+
+Yes.
+
+OBJ?
+
+No.
+
+-------
+
+V + N?
+
+No.
+
+N?
+
+Yes.
+
+V + OBJ?
+
+Yes.
+
+S?
+
+Done.
+
+-------
+
+	tagged_tokens = [('go', 'V'), ('east', 'N')]
+	rules_used = [('N', 'OBJ'), (('V', 'OBJ'), 'S')]
+
+	verb_pos = ['V']
+	obj_pos = ['N', 'NP']
+	adj_pos = ['ADJ']
+
+	verb = ""
+	object = ""
+
+	verb_index = 0
+	obj_index = 0
+	adj_index = 0
+
+	indices = []
+
+	def update_indices:
+		indices = [verb_index, obj_index, adj_index]
+
+	for i, (tag, token) in tagged_tokens:
+		if tag in verb_pos:
+			verb = token
+			verb_index = i
+			update_indices()
+		if (verb and i not in indices)
+			if tag in adj_pos:
+				adjective = token
+				adj_index = i
+				update_indices()
+			if tag in obj_pos:
+				object = token
+				obj_index = i
+				update_indices()
+
+
+
+
+
+
+
+
+
+

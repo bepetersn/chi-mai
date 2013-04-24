@@ -1,0 +1,49 @@
+def parse:
+	multiply tagged_tokens = [('go', ('V', 'N')), ('east', ('ADJ', 'N'))]
+	multiple_tags = [word[1] for word in multiply_tagged_tokens]
+	
+	gold = []
+	iter = 1
+
+	while not gold:
+		possible_tags = find_possible_tags(multiple_tags, iter)
+		gold, silver = valid_parse(possible_tags, multiply_tagged_tokens)
+		if silver:
+			multiple_tags = [word[1]] for word in silver]
+		iter += 1
+
+	return singly_tagged_tokens
+
+
+	def find_possible_tags(multiple_tags, iter)
+		possible_tags = []
+		for set_of_tags in multiple_tags:
+			possible_tags.append(set_of_tags[num])
+			if iter % 2 == 0:
+				num += 1
+
+	def valid_parse(possible_tags, multiply_tagged_tokens)
+		while True:
+			rule = matches_any_rule(possible_tags)
+			if not rule:
+				if len(possible_tags) == 0:
+					return None, None
+				else:
+					possible_tags = possible_tags[1:]
+			else:
+				end = len(rule.parts)
+				length = len(multiply_tagged_tokens)
+				child = (tuple(multiply_tagged_tokens[length-end:]), rules.composite)
+				print "node to add: ", child
+				for tagged_token in multiply_tagged_tokens[length-end:]:
+					print "node to be removed: ", tagged_token
+					multiply_tagged_tokens.remove(tagged_token)
+				tagged_tokens.append(child)
+				print "new tagged_tokens-to-be: ", multiply_tagged_tokens
+				raw_input()
+				if multiply_tagged_tokens[1] == 'S':
+					return possible_tags, None
+					print 'done! retrieved gold!'
+					raw_input()
+				else:
+					return None, multiply_tagged_tokens

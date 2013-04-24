@@ -1,0 +1,220 @@
+INFO: multiply_tagged_tokens: [('look', ['V', 'N']), ('at', ['P']), ('desk', ['N'])]
+INFO: tagsets: [['V', 'N'], ['P'], ['N']]
+INFO: tagset lengths: [2, 1, 1]
+INFO: working: [0, 0, 0]
+INFO: old working: []
+INFO: back stack: []
+INFO: starting loopy-loop
+INFO: finding a possible tag combination
+INFO: word #: 1
+INFO: tags for the word: ['V', 'N']
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: V
+INFO: word #: 2
+INFO: tags for the word: ['P']
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: P
+INFO: word #: 3
+INFO: tags for the word: ['N']
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: N
+INFO: tagset we're using this time: ['V', 'P', 'N']
+INFO: multiply tagged tokens: [('look', ['V', 'N']), ('at', ['P']), ('desk', ['N'])]
+INFO: we're going to try to get a better parse
+INFO: entering mtt into backstack: []
+INFO: we're gonna check against rules;
+INFO: if it matches any, we'll return the reduced tagged tokens;
+INFO: if it doesn't, we'll drop the leftmost tag...
+INFO: until the tags are empty--then we'll try a different possible tagset.
+INFO: ('V', 'P', 'N') and ('V', 'OBJ')
+INFO: ('V', 'P', 'N') and ('V', 'PP')
+INFO: ('V', 'P', 'N') and ('N',)
+INFO: ('V', 'P', 'N') and ('NP',)
+INFO: ('V', 'P', 'N') and ('DET', 'OBJ')
+INFO: ('V', 'P', 'N') and ('ADJ', 'OBJ')
+INFO: ('V', 'P', 'N') and ('TO', 'OBJ')
+INFO: ('V', 'P', 'N') and ('P', 'OBJ')
+INFO: ('V', 'P', 'N') and ('N', 'N')
+INFO: ('V', 'P', 'N') and ('V',)
+INFO: ('V', 'P', 'N') and ('V', 'ADV')
+INFO: no match, dropping leftmost
+INFO: ('P', 'N') and ('V', 'OBJ')
+INFO: ('P', 'N') and ('V', 'PP')
+INFO: ('P', 'N') and ('N',)
+INFO: ('P', 'N') and ('NP',)
+INFO: ('P', 'N') and ('DET', 'OBJ')
+INFO: ('P', 'N') and ('ADJ', 'OBJ')
+INFO: ('P', 'N') and ('TO', 'OBJ')
+INFO: ('P', 'N') and ('P', 'OBJ')
+INFO: ('P', 'N') and ('N', 'N')
+INFO: ('P', 'N') and ('V',)
+INFO: ('P', 'N') and ('V', 'ADV')
+INFO: no match, dropping leftmost
+INFO: ('N',) and ('V', 'OBJ')
+INFO: ('N',) and ('V', 'PP')
+INFO: ('N',) and ('N',)
+INFO: found a rule that matches
+INFO: getting slightly closer parse
+INFO: parts of rule: ('N',)
+INFO: composite of rule: ('OBJ',)
+INFO: num tags we're replacing: 1
+INFO: num tags in the whole sentence: 3
+INFO: everything we're replacing: [('desk', ['N'])]
+INFO: one singly, correctly tagged token: ('desk', 'N')
+INFO: added it to our list of stt's
+INFO: this is what we're adding to mtt in place of what we removed: (('desk', 'N'), ('OBJ',))
+INFO: new mtt, after removing some stuff: [('look', ['V', 'N']), ('at', ['P'])]
+INFO: new mtt, after adding some stuff: [('look', ['V', 'N']), ('at', ['P']), (('desk', 'N'), ('OBJ',))]
+INFO: backstack: [([('look', ['V', 'N']), ('at', ['P']), ('desk', ['N'])], [0, 0, 0])]
+INFO: we found a slightly closer parse: [('look', ['V', 'N']), ('at', ['P']), (('desk', 'N'), ('OBJ',))]
+INFO: we're going to reset our iterations over the tagsets.
+INFO: tagsets: [['V', 'N'], ['P'], ('OBJ',)]
+INFO: tagset lengths: [2, 1, 1]
+INFO: old working: [0, 0, 0]
+INFO: new working: [0, 0, 0]
+INFO: mtt: [('look', ['V', 'N']), ('at', ['P']), (('desk', 'N'), ('OBJ',))]
+INFO: starting loopy-loop
+INFO: finding a possible tag combination
+INFO: word #: 1
+INFO: tags for the word: ['V', 'N']
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: V
+INFO: word #: 2
+INFO: tags for the word: ['P']
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: P
+INFO: word #: 3
+INFO: tags for the word: ('OBJ',)
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: OBJ
+INFO: tagset we're using this time: ['V', 'P', 'OBJ']
+INFO: multiply tagged tokens: [('look', ['V', 'N']), ('at', ['P']), (('desk', 'N'), ('OBJ',))]
+INFO: we're going to try to get a better parse
+INFO: entering mtt into backstack: [([('look', ['V', 'N']), ('at', ['P']), ('desk', ['N'])], [0, 0, 0])]
+INFO: we're gonna check against rules;
+INFO: if it matches any, we'll return the reduced tagged tokens;
+INFO: if it doesn't, we'll drop the leftmost tag...
+INFO: until the tags are empty--then we'll try a different possible tagset.
+INFO: ('V', 'P', 'OBJ') and ('V', 'OBJ')
+INFO: ('V', 'P', 'OBJ') and ('V', 'PP')
+INFO: ('V', 'P', 'OBJ') and ('N',)
+INFO: ('V', 'P', 'OBJ') and ('NP',)
+INFO: ('V', 'P', 'OBJ') and ('DET', 'OBJ')
+INFO: ('V', 'P', 'OBJ') and ('ADJ', 'OBJ')
+INFO: ('V', 'P', 'OBJ') and ('TO', 'OBJ')
+INFO: ('V', 'P', 'OBJ') and ('P', 'OBJ')
+INFO: ('V', 'P', 'OBJ') and ('N', 'N')
+INFO: ('V', 'P', 'OBJ') and ('V',)
+INFO: ('V', 'P', 'OBJ') and ('V', 'ADV')
+INFO: no match, dropping leftmost
+INFO: ('P', 'OBJ') and ('V', 'OBJ')
+INFO: ('P', 'OBJ') and ('V', 'PP')
+INFO: ('P', 'OBJ') and ('N',)
+INFO: ('P', 'OBJ') and ('NP',)
+INFO: ('P', 'OBJ') and ('DET', 'OBJ')
+INFO: ('P', 'OBJ') and ('ADJ', 'OBJ')
+INFO: ('P', 'OBJ') and ('TO', 'OBJ')
+INFO: ('P', 'OBJ') and ('P', 'OBJ')
+INFO: found a rule that matches
+INFO: getting slightly closer parse
+INFO: parts of rule: ('P', 'OBJ')
+INFO: composite of rule: ('PP',)
+INFO: num tags we're replacing: 2
+INFO: num tags in the whole sentence: 3
+INFO: everything we're replacing: [('at', ['P']), (('desk', 'N'), ('OBJ',))]
+INFO: one singly, correctly tagged token: ('at', 'P')
+INFO: added it to our list of stt's
+INFO: one singly, correctly tagged token: (('desk', 'N'), 'OBJ')
+INFO: added it to our list of stt's
+INFO: this is what we're adding to mtt in place of what we removed: ((('at', 'P'), (('desk', 'N'), 'OBJ')), ('PP',))
+INFO: new mtt, after removing some stuff: [('look', ['V', 'N'])]
+INFO: new mtt, after adding some stuff: [('look', ['V', 'N']), ((('at', 'P'), (('desk', 'N'), 'OBJ')), ('PP',))]
+INFO: backstack: [([('look', ['V', 'N']), ('at', ['P']), ('desk', ['N'])], [0, 0, 0]), ([('look', ['V', 'N']), ('at', ['P']), (('desk', 'N'), ('OBJ',))], [0, 0, 0])]
+INFO: we found a slightly closer parse: [('look', ['V', 'N']), ((('at', 'P'), (('desk', 'N'), 'OBJ')), ('PP',))]
+INFO: we're going to reset our iterations over the tagsets.
+INFO: tagsets: [['V', 'N'], ('PP',)]
+INFO: tagset lengths: [2, 1]
+INFO: old working: [0, 0, 0]
+INFO: new working: [0, 0]
+INFO: mtt: [('look', ['V', 'N']), ((('at', 'P'), (('desk', 'N'), 'OBJ')), ('PP',))]
+INFO: starting loopy-loop
+INFO: finding a possible tag combination
+INFO: word #: 1
+INFO: tags for the word: ['V', 'N']
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: V
+INFO: word #: 2
+INFO: tags for the word: ('PP',)
+INFO: select next tag from above tags
+INFO: tag #: 1
+INFO: tag: PP
+INFO: tagset we're using this time: ['V', 'PP']
+INFO: multiply tagged tokens: [('look', ['V', 'N']), ((('at', 'P'), (('desk', 'N'), 'OBJ')), ('PP',))]
+INFO: we're going to try to get a better parse
+INFO: entering mtt into backstack: [([('look', ['V', 'N']), ('at', ['P']), ('desk', ['N'])], [0, 0, 0]), ([('look', ['V', 'N']), ('at', ['P']), (('desk', 'N'), ('OBJ',))], [0, 0, 0])]
+INFO: we're gonna check against rules;
+INFO: if it matches any, we'll return the reduced tagged tokens;
+INFO: if it doesn't, we'll drop the leftmost tag...
+INFO: until the tags are empty--then we'll try a different possible tagset.
+INFO: ('V', 'PP') and ('V', 'OBJ')
+INFO: ('V', 'PP') and ('V', 'PP')
+INFO: found a rule that matches
+INFO: getting slightly closer parse
+INFO: parts of rule: ('V', 'PP')
+INFO: composite of rule: ('S',)
+INFO: num tags we're replacing: 2
+INFO: num tags in the whole sentence: 2
+INFO: everything we're replacing: [('look', ['V', 'N']), ((('at', 'P'), (('desk', 'N'), 'OBJ')), ('PP',))]
+INFO: one singly, correctly tagged token: ('look', 'V')
+INFO: added it to our list of stt's
+INFO: one singly, correctly tagged token: ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP')
+INFO: added it to our list of stt's
+INFO: this is what we're adding to mtt in place of what we removed: ((('look', 'V'), ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP')), ('S',))
+INFO: new mtt, after removing some stuff: []
+INFO: new mtt, after adding some stuff: [((('look', 'V'), ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP')), ('S',))]
+INFO: backstack: [([('look', ['V', 'N']), ('at', ['P']), ('desk', ['N'])], [0, 0, 0]), ([('look', ['V', 'N']), ('at', ['P']), (('desk', 'N'), ('OBJ',))], [0, 0, 0]), ([('look', ['V', 'N']), ((('at', 'P'), (('desk', 'N'), 'OBJ')), ('PP',))], [0, 0])]
+INFO: we found a slightly closer parse: [((('look', 'V'), ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP')), ('S',))]
+INFO: we're going to reset our iterations over the tagsets.
+INFO: tagsets: [('S',)]
+INFO: tagset lengths: [1]
+INFO: old working: [0, 0]
+INFO: new working: [0]
+INFO: mtt: [((('look', 'V'), ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP')), ('S',))]
+INFO: we have successfully parsed a sentence!
+INFO: tree: ((('look', 'V'), ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP')), ('S',))
+INFO: drop the rightmost tag, 'S' for 'sentence'
+	INFO: tree: (('look', 'V'), ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP'))
+INFO: checking that two layers down is not a single char,
+INFO: in other words, 'tree' is not a simple tuple itself.
+WARNING: This will fail at a word like 'a', or 'I'
+INFO: append the next tagged token
+INFO: added: ('look', 'V')
+INFO: shorten the tree
+INFO: tree: ((('at', 'P'), (('desk', 'N'), 'OBJ')), 'PP')
+INFO: prep tree for next time by dropping rightmost tag, if there is one
+INFO: tree: (('at', 'P'), (('desk', 'N'), 'OBJ'))
+INFO: append the next tagged token
+INFO: added: ('at', 'P')
+INFO: shorten the tree
+INFO: tree: (('desk', 'N'), 'OBJ')
+INFO: prep tree for next time by dropping rightmost tag, if there is one
+INFO: tree: ('desk', 'N')
+INFO: if tree contains anything, it is the last tagged token.
+INFO: so append it to the 'tagged_tokens'.
+INFO: added: ('desk', 'N')
+INFO: [('look', 'V'), ('at', 'P'), ('desk', 'N')]
+INFO: 0, look, V
+INFO: it's a verb!
+INFO: 1, at, P
+INFO: don't care, not a verb or noun
+INFO: 2, desk, N
+INFO: it's a noun!
+DEBUG: verb: look, object: GameObject { name: Front Desk, location: 0, desc: The front desk has a sign... }
+DEBUG: our object: GameObject { name: Front Desk, location: 0, desc: The front desk has a sign... }, a generic GameObject: GameObject { name: , location: None, desc: ... }

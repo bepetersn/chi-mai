@@ -1,0 +1,137 @@
+import objects.player as l
+import objects.room as r
+import objects.exit as e
+import objects.game_object as o
+import objects.fix as fix
+
+import components.parser as p
+import components.binder as b
+import components.commands as cs
+
+from errors import QuitException, GameException
+
+import logging 
+import sys
+import pickle
+import glob
+
+player = l.Player()
+rooms = None
+commands = cs.CommandWords()
+parser = p.Parser()
+
+def play():
+
+    init()
+    while True:
+        sys.stdout.write("\n>")
+        try:
+            command = parser.get_command()
+        except QuitException:
+            break
+        except GameException as err:
+            print err.message
+            continue
+        execute(command)
+        post_process()
+
+    print "Thanks for playing!"
+
+def init():
+    global rooms
+    while True:
+        try:
+            rooms = create_rooms(get_map())
+            break
+        except IOError:
+            print "that's not a map!"
+    sys.stdout.write('\n')
+
+    player.set_current_room(rooms[0])
+    parser.actions = create_actions()
+    parser.binder = b.Binder(player, rooms)
+
+def get_map():
+    maps = glob.glob('../maps/*.pkl')
+    print "What map do you want to use?"
+    print "Possibilities: "
+    for map in maps:
+        print map[7:-4] + "    "
+    return raw_input()
+
+def create_rooms(map):
+    map_filename = '../maps/' + str(map) + '.pkl'
+    with open(map_filename) as f:
+        rooms = pickle.load(f)
+    return rooms
+
+def create_actions():
+    the_actions = []
+    for command in commands.instance:
+        the_actions.append((command, eval(command)))
+    return the_actions
+
+def execute(command):
+
+    command.action(command.object)
+
+def post_process():
+
+    parser.binder.update(player, rooms)
+
+###########################################
+###########################################
+
+def go(room):
+    player.set_current_room(room)
+    return
+
+def look(object):
+    try:
+        object.describe()
+    except AttributeError:
+        player.describe()
+
+def take(object):
+        
+    player.location.remove_item(object)
+    player.add_to_inventory(object)
+    if object.conceal:
+        conceal.concealed = False
+
+def drop(object):
+    player.remove_from_inventory(object)
+    player.location.add_item(object)
+
+def inventory(val=None):
+    for item in player.get_items():
+        print item.name
+        if item.container:
+            for contained_item in item.items:
+                print "the %s contains a %s" % (contained_item, item.name)
+
+def jump(val=None):
+
+    print "Are you having fun?"
+
+def talk(person):
+    pass
+
+def climb():
+    pass
+
+def read():
+    pass
+
+def say():
+    pass
+
+def attack():
+    pass
+
+###############################################
+###############################################
+
+
+if __name__ == '__main__':
+    play()

@@ -1,0 +1,17 @@
+        exit ---------->   object       container
+  								          ^   ^          ^
+  							   ++++++++++   ++++++++++++ 
+  							   |        |      |      |
+  							   |	      |      |      |
+  						     |      +++     room   actor
+  						     |		  |               ^ 
+  					+++++++   fixture   		      |
+  					|	        		^               +++++++
+  					|	        moveable                  |
+            |                                   |
+  			  takeable         container          player
+  			  ^    ^  ^             ^
+  		+++++++	 |  |             |
+  		|        |  +++++++++++++++
+  		|        |          |
+ consumable  equippable  container_item
