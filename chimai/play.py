@@ -72,11 +72,9 @@ def create_actions():
     return the_actions
 
 def execute(command):
-
     command.action(command.object)
 
 def post_process():
-
     parser.binder.update(player, rooms)
 
 ###########################################
@@ -84,16 +82,14 @@ def post_process():
 
 def go(room):
     player.set_current_room(room)
-    return
 
 def look(object):
-    try:
+    if object:
         object.describe()
-    except AttributeError:
+    else:
         player.describe()
 
 def take(object):
-        
     player.location.remove_item(object)
     player.add_to_inventory(object)
     if object.conceal:
@@ -111,7 +107,6 @@ def inventory(val=None):
                 print "the %s contains a %s" % (contained_item, item.name)
 
 def jump(val=None):
-
     print "Are you having fun?"
 
 def talk(person):
