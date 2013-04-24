@@ -54,116 +54,114 @@ class Parser:
 	logging.debug("verb: %s, object: %s" % (verb, object))
 	return c.Command(verb, action[1], object)
 
-	def tokenize(self, line):
-	    line = self.depunctuate(line)
-	    line = line.strip().split(" ")
-	    return line 
+    def tokenize(self, line):
+        line = self.depunctuate(line)
+	line = line.strip().split(" ")
+	return line 
 
-	""" stupidly fails with more than one punctuation mark in a command... """
-	def depunctuate(self, line):
-	    for i, char in enumerate(line):
-		if char in '.,?!:;':
-		    line = line.replace(char, "")
-	    return line
+    """ stupidly fails with more than one punctuation mark in a command... """
+    def depunctuate(self, line):
+	for i, char in enumerate(line):
+	    if char in '.,?!:;':
+	        line = line.replace(char, "")
+	return line
 
-	def parse(self, tokens):
-	    if len(tokens) == 1:
-	        if tokens[0] == 'quit':
-		    raise QuitException
-		elif tokens[0] == 'help':
-		    raise HelpException
-	    multiply_tagged_tokens = self.tag(tokens)
-	    tree = self.build_valid_sentence(multiply_tagged_tokens)
-            return self.unpack_tree(tree)
+    def parse(self, tokens):
+	if len(tokens) == 1:
+	    if tokens[0] == 'quit':
+		raise QuitException
+	    elif tokens[0] == 'help':
+		raise HelpException
+	multiply_tagged_tokens = self.tag(tokens)
+	tree = self.build_valid_sentence(multiply_tagged_tokens)
+        return self.unpack_tree(tree)
 
-	def tag(self, tokens):
-	    tagged_tokens = [self.find_all_tags(token) for token in tokens]
-	    return tagged_tokens
+    def tag(self, tokens):
+        tagged_tokens = [self.find_all_tags(token) for token in tokens]
+	return tagged_tokens
 
-	def find_all_tags(self, token):
-	    try:
-		if not token:
-		    raise NoCommandException
-		elif token[0].isalpha():
-		    tags = self.vocab[token[0]][token]
-		else:
-		    tags = self.vocab['.'][token]
-		tags = sorted(tags, key=lambda t: t[1], reverse=True)
-		return (token, [str(tag[0]) for tag in tags])  
-	    except KeyError:
-		raise UnknownWordException(token)
+    def find_all_tags(self, token):
+        try:
+	    if not token:
+	        raise NoCommandException
+	    elif token[0].isalpha():
+		tags = self.vocab[token[0]][token]
+	    else:
+		tags = self.vocab['.'][token]
+	    tags = sorted(tags, key=lambda t: t[1], reverse=True)
+            return (token, [str(tag[0]) for tag in tags])  
+	except KeyError:
+	    raise UnknownWordException(token)
 
-  	def build_valid_sentence(self, multiply_tagged_tokens):
-  	    logging.info("multiply_tagged_tokens: %s", multiply_tagged_tokens)
+    def build_valid_sentence_tree(self, multiply_tagged_tokens):
+        logging.info("multiply_tagged_tokens: %s", multiply_tagged_tokens)
+        tagsets = [word[1] for word in multiply_tagged_tokens]
+  	logging.info("tagsets: %s", tagsets)
 
-            tagsets = [word[1] for word in multiply_tagged_tokens]
-  	    logging.info("tagsets: %s", tagsets)
+  	tagset_lengths = self.get_tagset_lengths(tagsets)
+  	logging.info("tagset lengths: %s", tagset_lengths)
 
-  	    tagset_lengths = self.get_tagset_lengths(tagsets)
-  	    logging.info("tagset lengths: %s", tagset_lengths)
+	working = [0 for tagset in tagset_lengths]
+        logging.info("working: %s", working)
 
-	    working = [0 for tagset in tagset_lengths]
-            logging.info("working: %s", working)
+	old_working = []
+	logging.info("old working: %s", old_working)
 
-	    old_working = []
-	    logging.info("old working: %s", old_working)
+	backstack = []
+	logging.info("back stack: %s", backstack)
 
-	    backstack = []
-	    logging.info("back stack: %s", backstack)
+	while True:
 
+	    logging.info("starting loopy-loop")
 	    while True:
 
-		logging.info("starting loopy-loop")
+	        logging.info("finding a possible tag combination")
+		possible_tags = self.find_possible_tags(tagsets, working)
 
-		while True:
+		logging.info("multiply tagged tokens: %s", multiply_tagged_tokens)
+		logging.info("we're going to try to get a better parse")
 
-		    logging.info("finding a possible tag combination")
-		    possible_tags = self.find_possible_tags(tagsets, working)
+		logging.info("entering mtt into backstack: %s", backstack)
+		backstack.append((multiply_tagged_tokens, working))
 
-		    logging.info("multiply tagged tokens: %s", multiply_tagged_tokens)
-		    logging.info("we're going to try to get a better parse")
-
-		    logging.info("entering mtt into backstack: %s", backstack)
-		    backstack.append((multiply_tagged_tokens, working))
-
-		    reduced = self.try_to_reduce(possible_tags, multiply_tagged_tokens)
-		    if reduced:
-                        logging.info("backstack: %s", backstack)
-			logging.info("we found a slightly closer parse: %s", reduced)
-		        logging.info("we're going to reset our iterations over the tagsets.")
+		reduced = self.try_to_reduce(possible_tags, multiply_tagged_tokens)
+		if reduced:
+                    logging.info("backstack: %s", backstack)
+		    logging.info("we found a slightly closer parse: %s", reduced)
+		    logging.info("we're going to reset our iterations over the tagsets.")
 					
-		        tagsets = [word[1] for word in reduced]
-			logging.info("tagsets: %s", tagsets)
+		    tagsets = [word[1] for word in reduced]
+	            logging.info("tagsets: %s", tagsets)
 
-			tagset_lengths = self.get_tagset_lengths(tagsets)
-			logging.info("tagset lengths: %s", tagset_lengths)  
+	            tagset_lengths = self.get_tagset_lengths(tagsets)
+		    logging.info("tagset lengths: %s", tagset_lengths)  
 
-			old_working = working
-			logging.info("old working: %s", old_working)  
+		    old_working = working
+		    logging.info("old working: %s", old_working)  
 
-		        working = [0 for tagset in tagset_lengths]
-			logging.info("new working: %s", working) 
+		    working = [0 for tagset in tagset_lengths]
+		    logging.info("new working: %s", working) 
                    
-		    	multiply_tagged_tokens = reduced
-		        logging.info("mtt: %s", multiply_tagged_tokens)
+		    multiply_tagged_tokens = reduced
+		    logging.info("mtt: %s", multiply_tagged_tokens)
                     
-		    	break
-		    else:
-			logging.info("we didn't find a slightly closer parse.")
-			logging.info("we're going to go further into our tagsets, and generate the next working.")
-			working = self.create_working(tagset_lengths, working)
+		    break
+		else:
+		    logging.info("we didn't find a slightly closer parse.")
+		    logging.info("we're going to go further into our tagsets, and generate the next working.")
+		    working = self.create_working(tagset_lengths, working)
 
-			while not working:
+		    while not working:
 
-			    logging.info("shoot, we've tried every possible combination!")
-			    logging.info("we have to backtrack!")
+			logging.info("shoot, we've tried every possible combination!")
+			logging.info("we have to backtrack!")
 
-			    backstack = self.backtrack(backstack, multiply_tagged_tokens, old_working, 
-				tagsets, tagset_lengths, working)
+			backstack = self.backtrack(backstack, multiply_tagged_tokens, old_working, 
+			    tagsets, tagset_lengths, working)
 
-		if reduced[0][1] == tuple('S'):
-		    logging.info("we have successfully parsed a sentence!")
-		    return reduced[0]
+	    if reduced[0][1] == tuple('S'):
+                logging.info("we have successfully parsed a sentence!")
+		return reduced[0]
 
     def get_tagset_lengths(self, tagsets):
         tagset_lengths = []
