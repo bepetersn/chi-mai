@@ -28,10 +28,6 @@ class Player(actor.Actor):
         else:
             print "go where?"
 
-    def describe(self):
-        print self.location.name
-        print self.location.description
-
     def converse_with(self, person):
         if type(person) == type(actor.Actor("", "", "", "", "")):
             print person.name, "says hi."

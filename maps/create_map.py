@@ -66,7 +66,7 @@ properties = {
 	'description': get_desc,
 	'aliases': get_aliases,
 	'item_type': get_item_type,
-	'dir': get_exit_dir,
+	'dir': get_exit_dir
 	}
 
 item_types = {
@@ -74,7 +74,7 @@ item_types = {
 	'move': move.Moveable,
 	'take': take.Takeable,
 	'consume': consume.Consumable,
-	'equip': equip.Equippable,
+	'equip': equip.Equippable
 	}
 
 #######################
@@ -96,21 +96,21 @@ def create_exits(map, object='exit'):
 	while exit_response in affirm:
 
 		room1 = prompt('Room 1: ')
-		room1id = find_room_by_name(map, room1)
-
 		room2 = prompt('Room 2: ')
-		room2id = find_room_by_name(map, room2)
 		
 		for i in range(2):
 
+			room1id = find_room_by_name(map, room1)
+			room2id = find_room_by_name(map, room2)
+
 			exit = ex.Exit(room1id)
-			exit.dir = get_property('dir', (room1, room2))
+			exit.end = room2id
 			exit.name = get_property('name', object)
+			exit.dir = get_property('dir', (room1, room2))
 			exit.aliases = get_property('aliases', object)
 			map[room1id].exits.append(exit)
 
 			room1, room2 = room2, room1
-			room1id = room2id
 
 		print "added exits in each room!"
 		raw_input()

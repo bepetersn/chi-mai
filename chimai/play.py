@@ -20,8 +20,8 @@ rooms = None
 commands = cs.CommandWords()
 parser = p.Parser()
 
-def play():
 
+def play():
     init()
     while True:
         sys.stdout.write("\n>")
@@ -47,6 +47,8 @@ def init():
             print "that's not a map!"
     sys.stdout.write('\n')
 
+    print rooms[0]
+    raw_input()
     player.set_current_room(rooms[0])
     parser.actions = create_actions()
     parser.binder = b.Binder(player, rooms)
@@ -68,7 +70,7 @@ def create_rooms(map):
 def create_actions():
     the_actions = []
     for command in commands.instance:
-        the_actions.append((command, eval(command)))
+        the_actions.append((command, actions[command]))
     return the_actions
 
 def execute(command):
@@ -87,7 +89,7 @@ def look(object):
     if object:
         object.describe()
     else:
-        player.describe()
+        player.current_room.describe()
 
 def take(object):
     player.location.remove_item(object)
@@ -123,6 +125,20 @@ def say():
 
 def attack():
     pass
+
+actions = {
+    'go': go,
+    'look': look,
+    'take': take,
+    'drop': drop,
+    'inventory': inventory,
+    'jump': jump,
+    'talk': talk,
+    'climb': climb,
+    'read': read,
+    'say': say,
+    'attack': attack,
+}
 
 ###############################################
 ###############################################

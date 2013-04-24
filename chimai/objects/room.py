@@ -14,6 +14,10 @@ class Room(game_object.GameObject, container.Container):
     def add_exit(self, exit):
 	    self.exits.append(exit)
 
+    def describe(self):
+        print self.name
+        print self.description
+
     def is_accessible_from(self, other_room):
         return other_room.id in [exit.end for exit in self.exits]
 
