@@ -3,8 +3,8 @@ import sys
 
 from os.path import isfile
 
-from chimai.chimai.objects import game_object as o, exit as ex, room as r, \
-		fix, move, take, consume, equip
+from chimai.chimai.objects import game_object as o, exit as ex, \
+	room as r, fix, move, take, consume, equip
 
 affirm = ['y', 'yes']
 
@@ -22,12 +22,7 @@ def get_next_filename():
 	return filename
 		
 def prompt(a_str):
-	print a_str
-	answer = raw_input()
-	if answer == 'b':
-		raise GoBackException
-	else:
-		return answer 
+	return raw_input(a_str + '\n')
 
 def yes_no(a_str):
 	"Type 'yes' or just 'y' to say so."
