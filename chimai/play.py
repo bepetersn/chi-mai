@@ -15,6 +15,8 @@ import sys
 import pickle
 import glob
 
+from os import isfile
+
 player = l.Player()
 rooms = None
 commands = cs.CommandWords()
@@ -39,16 +41,9 @@ def play():
 
 def init():
     global rooms
-    while True:
-        try:
-            rooms = create_rooms(get_map())
-            break
-        except IOError:
-            print "that's not a map!"
+    rooms = create_rooms(get_map())
     sys.stdout.write('\n')
 
-    print rooms[0]
-    raw_input()
     player.set_current_room(rooms[0])
     parser.actions = create_actions()
     parser.binder = b.Binder(player, rooms)
@@ -59,7 +54,12 @@ def get_map():
     print "Possibilities: "
     for map in maps:
         print map[7:-4] + "    "
-    return raw_input()
+    while True:
+        map = raw_input()
+        if not isfile(map):
+            print "that's not a map!"
+        else:
+            return map
 
 def create_rooms(map):
     map_filename = '../maps/' + str(map) + '.pkl'
