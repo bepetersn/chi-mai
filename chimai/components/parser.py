@@ -59,7 +59,6 @@ class Parser:
         line = line.strip().split(" ")
         return line 
 
-    """ stupidly fails with more than one punctuation mark in a command... """
     def depunctuate(self, line):
         for i, char in enumerate(line):
             if char in '.,?!:;':
@@ -73,8 +72,9 @@ class Parser:
             elif tokens[0] == 'help':
                 raise HelpException
         multiply_tagged_tokens = self.tag(tokens)
-        tree = self.build_valid_sentence(multiply_tagged_tokens)
-        return self.unpack_tree(tree)
+        tree = self.build_valid_sentence_tree(multiply_tagged_tokens)
+        singly_tagged_tokens = self.unpack_tree(tree)
+        return singly_tagged_tokens
 
     def tag(self, tokens):
         tagged_tokens = [self.find_all_tags(token) for token in tokens]
@@ -95,6 +95,7 @@ class Parser:
 
     def build_valid_sentence_tree(self, multiply_tagged_tokens):
         logging.info("multiply_tagged_tokens: %s", multiply_tagged_tokens)
+        
         tagsets = [word[1] for word in multiply_tagged_tokens]
         logging.info("tagsets: %s", tagsets)
 
@@ -119,7 +120,7 @@ class Parser:
                 possible_tags = self.find_possible_tags(tagsets, working)
 
                 logging.info("multiply tagged tokens: %s", multiply_tagged_tokens)
-                logging.info("we're going to try to get a better parse")
+                logging.info("we're going to try to get a reduced parse")
 
                 logging.info("entering mtt into backstack: %s", backstack)
                 backstack.append((multiply_tagged_tokens, working))
@@ -127,7 +128,7 @@ class Parser:
                 reduced = self.try_to_reduce(possible_tags, multiply_tagged_tokens)
                 if reduced:
                     logging.info("backstack: %s", backstack)
-                    logging.info("we found a slightly closer parse: %s", reduced)
+                    logging.info("we found a reduced parse: %s", reduced)
                     logging.info("we're going to reset our iterations over the tagsets.")
                                         
                     tagsets = [word[1] for word in reduced]
@@ -147,8 +148,9 @@ class Parser:
                     
                     break
                 else:
-                    logging.info("we didn't find a slightly closer parse.")
-                    logging.info("we're going to go further into our tagsets, and generate the next working.")
+                    logging.info("we didn't find a reduced parse.")
+                    logging.info("we're going to go further into our tagsets,"
+                        " and generate next possible combination.")
                     working = self.create_working(tagset_lengths, working)
 
                     while not working:
@@ -209,9 +211,9 @@ class Parser:
             logging.info(", so we'll check the next highest integer.")
             x += 1
             
-            #NOTE: these lines were here, but I don't see what their purpose could be.
-            #logging.info("working: %s", working)
-            #return working
+        #NOTE: Leftover from a refactoring confusion. Do I need these lines? 
+        #logging.info("working: %s", working)
+        #return working
 
     def find_possible_tags(self, tagsets, working):
 
@@ -336,11 +338,10 @@ class Parser:
 
         logging.info("checking that two layers down is not a single char,")
         logging.info("in other words, 'tree' is not a simple tuple itself.")
-        logging.warning("This will fail at a word like 'a', or 'I'")
+        logging.warning("This will fail with a word like 'a', or 'I'")
 
         while len(tree[0][0]) != 1:
             
-            logging.info("append the next tagged token")
             singly_tagged_tokens.append(tree[0])
             logging.info("added: %s", tree[0])
             
@@ -351,8 +352,8 @@ class Parser:
             logging.info("prep tree for next time by dropping rightmost tag, if there is one")
             if len(tree[0][0]) != 1:
                 tree = tree[0] 
-
-        logging.info("tree: %s", tree)
+                logging.info("tree: %s", tree)
+                
         logging.info("if tree contains anything, it is the last tagged token.")
         if tree:
             logging.info("so append it to the 'tagged_tokens'.")
