@@ -2,6 +2,7 @@ import nltk
 import json
 import logging 
 import collections
+import string
 
 import components.commands as cs
 import objects.command as c
@@ -60,9 +61,9 @@ class Parser:
         return line 
 
     def depunctuate(self, line):
-        for i, char in enumerate(line):
-            if char in '.,?!:;':
-                line = line.replace(char, "")
+        for char in line:
+            if char in string.punctuation:
+                line = line.replace(char, '')
         return line
 
     def parse(self, tokens):
@@ -273,7 +274,7 @@ class Parser:
         logging.info("everything we're replacing: %s", node)
         singly_tagged_tokens = []
 
-        # doing some fancy footwork to get a copy of mtt rather than a reference to it.
+        #get a copy of mtt rather than a reference to it.
         new_mtt = multiply_tagged_tokens[:]
 
         for i, tagged_token in enumerate(node):
@@ -281,20 +282,22 @@ class Parser:
             logging.info("one singly, correctly tagged token: %s", singly_tagged)
             singly_tagged_tokens.append(singly_tagged)
             logging.info("added it to our list of stt's")
+
         if len(singly_tagged_tokens) == 1:
             child = (singly_tagged, composite)
         else:
             child = ((singly_tagged_tokens[0], singly_tagged_tokens[1]), composite)
-            logging.info("this is what we're adding to mtt in place of what we removed: %s", child)
-            for tagged_token in node:
-                new_mtt.remove(tagged_token)
-                logging.info("new mtt, after removing some stuff: %s", new_mtt)
-                new_mtt.append(child)
-                logging.info("new mtt, after adding some stuff: %s", new_mtt)
+
+        logging.info("this is what we're adding to mtt in place of what we're removing: %s", child)
+        for tagged_token in node:
+            new_mtt.remove(tagged_token)
+            logging.info("new mtt, after removing some stuff: %s", new_mtt)
+            new_mtt.append(child)
+            logging.info("new mtt, after adding some stuff: %s", new_mtt)
+            
         return new_mtt
 
-    def backtrack(self, backstack, multiply_tagged_tokens, old_working, 
-    	    tagsets, tagset_lengths, working):
+    def backtrack(self, backstack, multiply_tagged_tokens, old_working, tagsets, tagset_lengths, working):
 
         try:
             logging.info("here's our backstack: %s", backstack)
@@ -313,7 +316,7 @@ class Parser:
         logging.info("mtt: %s", multiply_tagged_tokens)
                                                  
         old_working = last_attempt[1]
-        logging.info("old working: ", old_working)
+        logging.info("old working: %s", old_working)
 
         tagsets = [word[1] for word in multiply_tagged_tokens]
         logging.info("tagsets: %s", tagsets) 

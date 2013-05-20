@@ -3,16 +3,17 @@ import sys
 
 from os.path import isfile
 
-from chimai.chimai.objects import game_object as o, exit as ex, \
+from objects import game_object as o, exit as ex, \
 	room as r, fix, move, take, consume, equip
 
 affirm = ['y', 'yes']
 
-def get_next_filename():
+def get_filename():
 
 	print "What do you want to name this map?"
 	print "Enter below:"
-	filename = raw_input()
+	filename = '../maps/'
+	filename += raw_input()
 	filename += '.pkl'
 
 	while isfile(filename): 
@@ -120,7 +121,10 @@ def create_exits(map, object='exit'):
 			exit_response = yes_no("Are you sure you don't want any more exits? If you do, say yes.")
 
 def specialize(item):
-	item_type = get_property('item_type', 'item')
+	try:
+		item_type = get_property('item_type', 'item')
+	except KeyError:
+		item_type = prompt("Sorry, that's not a type of item. Try again.")
 	return item_types[item_type].from_super(item)
 
 def create_items(room, object='item'):
@@ -145,7 +149,7 @@ def create_items(room, object='item'):
 			#" You will not be able to change it after this point.") % object)
 
 		items.append(item)
-		item_response = yes_no("Does it have another %s? If so, say yes" % object)
+		item_response = yes_no("Is there another %s in the room? If so, say yes" % object)
 		if item_response not in affirm:
 			item_response = yes_no("Are you sure you don't want any more items? If you do, say yes.")
 
@@ -203,7 +207,7 @@ def create_map():
 	print "All done! Now we just have to save this map to a file."
 	raw_input()
 
-	with open(get_next_filename(), 'w') as f:
+	with open(get_filename(), 'w') as f:
 		pickle.dump(map, f)
 
 	print "Sucessful map-making!"

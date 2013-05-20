@@ -15,7 +15,7 @@ import sys
 import pickle
 import glob
 
-from os import isfile
+from os.path import isfile
 
 player = l.Player()
 rooms = None
@@ -40,8 +40,11 @@ def play():
 
 def init():
     global rooms
-    rooms = create_rooms(get_map())
+    map_name = get_map()
+    rooms = create_rooms(map_name)
     sys.stdout.write('\n')
+
+    print rooms
 
     player.set_current_room(rooms[0])
     parser.actions = create_actions()
@@ -52,16 +55,16 @@ def get_map():
     print "What map do you want to use?"
     print "Possibilities: "
     for map in maps:
-        print map[7:-4] + "    "
+        print map[8:-4] + "    "
     while True:
-        map = raw_input()
+        map = '../maps/' + raw_input() + '.pkl'
         if not isfile(map):
             print "that's not a map!"
         else:
             return map
 
 def create_rooms(map):
-    map_filename = '../maps/' + str(map) + '.pkl'
+    map_filename = str(map)
     with open(map_filename) as f:
         rooms = pickle.load(f)
     return rooms
@@ -88,7 +91,7 @@ def look(object):
     if object:
         object.describe()
     else:
-        player.current_room.describe()
+        player.location.describe()
 
 def take(object):
     player.location.remove_item(object)
