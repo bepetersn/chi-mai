@@ -28,7 +28,7 @@ class UnknownWordException(GameException):
 
 class InaccessibleDirException(GameException):
     def __init__(self):
-    	self.message = "You can't go that way right now. "
+    	self.message = "What's that? You can't go that way right now."
 
 class InaccesibleRoomException(GameException):
     def __init__(self):

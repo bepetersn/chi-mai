@@ -43,9 +43,6 @@ def init():
     map_name = get_map()
     rooms = create_rooms(map_name)
     sys.stdout.write('\n')
-
-    print rooms
-
     player.set_current_room(rooms[0])
     parser.actions = create_actions()
     parser.binder = b.Binder(player, rooms)
@@ -55,9 +52,9 @@ def get_map():
     print "What map do you want to use?"
     print "Possibilities: "
     for map in maps:
-        print map[8:-4] + "    "
+        print map[8:]
     while True:
-        map = '../maps/' + raw_input() + '.pkl'
+        map = '../maps/' + raw_input()
         if not isfile(map):
             print "that's not a map!"
         else:

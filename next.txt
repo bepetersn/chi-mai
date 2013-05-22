@@ -1,0 +1,2 @@
+1) Instead of making a tree out of confusing sets of tuples, use pyTree, or my own data structure to encode sentence structure.
+2) Separate rules from the parser, into their own document. 

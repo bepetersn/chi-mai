@@ -24,10 +24,9 @@ class Binder:
     def check_object_name_is_exit(self, object_name, exit):
         if object_name == exit.name:
             return self.rooms[int(exit.end)]
-        if exit.aliases:
-            for alias in exit.aliases:
-                if object_name == alias:
-                    return self.rooms[int(exit.end)]
+        for alias in exit.aliases:
+            if object_name == alias:
+                return self.rooms[int(exit.end)]
 
     def check_object_name_is_dir(self, object_name, exit):
         if object_name == exit.dir:
@@ -42,7 +41,6 @@ class Binder:
                     return room
 
     def check_object_name_is_item(self, object_name, item):
-        print object_name, item.name
         if object_name == item.name:
             if not item.concealed:
                 return item
@@ -58,16 +56,17 @@ class Binder:
             self.check_object_name_is_room, self.check_object_name_is_item]
 
         if action_name == 'go':
-
+            
             for exit in self.current_exits:
                 for check in checks[:2]:
                     if check(object_name, exit):
                         return check(object_name, exit)
             
-            for room in self.rooms:
+            for room in self.rooms.values():
                 if checks[2](object_name, room):
                     return checks[2](object_name, room)
 
+            # if no matching exit, dir, or room is found
             raise InaccessibleDirException()
 
         if action_name == 'take':

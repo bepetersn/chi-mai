@@ -1,8 +1,8 @@
-import nltk
 import json
 import logging 
 import collections
 import string
+from treelib import Node, Tree
 
 import components.commands as cs
 import objects.command as c
@@ -287,13 +287,14 @@ class Parser:
             child = (singly_tagged, composite)
         else:
             child = ((singly_tagged_tokens[0], singly_tagged_tokens[1]), composite)
-
-        logging.info("this is what we're adding to mtt in place of what we're removing: %s", child)
+        
         for tagged_token in node:
             new_mtt.remove(tagged_token)
             logging.info("new mtt, after removing some stuff: %s", new_mtt)
-            new_mtt.append(child)
-            logging.info("new mtt, after adding some stuff: %s", new_mtt)
+        
+        logging.info("this is what we're adding to mtt in place of what we're removing: %s", child)
+        new_mtt.append(child)
+        logging.info("new mtt, after adding some stuff: %s", new_mtt)
             
         return new_mtt
 
@@ -330,6 +331,21 @@ class Parser:
         return backstack
 
     def unpack_tree(self, tree):
+
+        """
+
+        mtt = [('look', ['V', 'N']), ('at', ['P']), ('book', ['N', 'NP', 'V'])]
+
+        parsed_sentence = (('look', ('V')), ((('at', ('P')), (('book', ('N')), ('OBJ',))), ('PP',)), ('S',))
+
+        tree = ('S',)
+            -> ('look', 'V') - ('PP',)
+                            -> ('at', 'P') - ('OBJ',)
+                                          -> ('book', 'N')
+
+        stt = [('look', 'V'), ('at', 'P'), ('book', 'N',)] """
+
+
         singly_tagged_tokens = []
 
         logging.info("tree: %s", tree)
@@ -381,15 +397,15 @@ class Parser:
             if (tag not in verb_pos) and (tag not in obj_pos):
                 logging.info("don't care, not a verb or noun")
                 continue
-            if tag in verb_pos:
+            elif tag in verb_pos:
                 logging.info("it's a verb!")
                 verb = token
                 verb_index = i
-                if verb and i != verb_index:
-                    if tag in obj_pos:
-                        logging.info("it's a noun!")
-                        object = token
-                        obj_index = i
+            elif verb and i != verb_index:
+                if tag in obj_pos:
+                    logging.info("it's a noun!")
+                    object = token
+                    obj_index = i
             if verb and i == 0 and len(singly_tagged_tokens) == 1:
                 return verb, None
 

@@ -22,6 +22,6 @@ class Room(game_object.GameObject, container.Container):
         return other_room.id in [exit.end for exit in self.exits]
 
     def __repr__(self):
-        return ("Room: \nname: '%s', \ndescription: '%s', \nid: '%s'>"
-            "\nitems: {%s}, \nexits: {%s}" % (self.name, self.description[:50],
+        return ("<Room: \nname: '%s', \ndescription: '%s', \nid: '%s'"
+            "\nitems: {%s}, \nexits: {%s}\n>\n" % (self.name, self.description[:50],
             str(self.id), self.items, self.exits))

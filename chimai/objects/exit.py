@@ -7,5 +7,5 @@ class Exit(game_object.GameObject):
 		self.end = end
 
 	def __repr__(self):
-		return ("Exit: <name: '%s', direction: '%s', room you end in: '%s'>" % 
+		return ("<Exit: <name: '%s', direction: '%s', room you end in: '%s'>" % 
 				(self.name, self.dir, str(self.end)))

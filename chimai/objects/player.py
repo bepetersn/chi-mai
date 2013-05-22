@@ -2,7 +2,7 @@ import actor
 
 class Player(actor.Actor):
     
-    def __init__(self,name="name",current_room=None,description="desc",
+    def __init__(self,name="",current_room=None,description="",
                 inventory=[],conversation=None):
         actor.Actor.__init__(self, name, current_room, description,
             inventory, conversation)
@@ -24,7 +24,7 @@ class Player(actor.Actor):
     def set_current_room(self, room):
         if room:
             self.location = room
-            self.describe()
+            room.describe()
         else:
             print "go where?"
 
