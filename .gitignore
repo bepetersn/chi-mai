@@ -1,7 +1,2 @@
 *.pyc
 *~
-maps/edit_map.py
-plans/*
-setup.py
-logs/*
-maps/*
