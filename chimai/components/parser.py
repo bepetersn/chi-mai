@@ -12,8 +12,7 @@ from errors import QuitException, HelpException, \
     FailedParseException, UnknownWordException, \
     NoCommandException, UnknownCommandException
 
-logging.basicConfig(format='%(levelname)s: %(message)s', 
-    filename='../logs/chimai.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='../logs/chimai.log', filemode='w', level=logging.DEBUG)
 
 def get_rules(f):
     rules = collections.OrderedDict()
@@ -41,7 +40,7 @@ class Parser:
         with open('rules.txt') as f:
             self.rules = get_rules(f)
 
-        with open('../vocab/part_of_speech.json') as f:
+        with open('../vocab/parts_of_speech.json') as f:
             json_string = f.read()
 
         self.vocab = json.loads(json_string)

@@ -1,2 +1,12 @@
 1) Instead of making a tree out of confusing sets of tuples, use pyTree, or my own data structure to encode sentence structure.
-2) Separate rules from the parser, into their own document. 
+2) Rather tangential, but -- make my own logger class that inherits from one or another class -- use it to create a new log file for each run of the program.
+3) Build unit tests for each of the components of the parser. Since it is the most likely thing to break, these unit tests are most important. However, for example:
+I should have unit tests to verify "matches_any_rules()", "reduce_by_rule()", "unpack_tree()", and "find_verb_and_object()". These functionalities are all fairly
+separate and independent. There may be a few others like this as well. For example, I may be able to test whether "try_to_reduce()" produces at least a few 
+expected outputs. Then there's non-parsing methods--these should all be rock-solid with their unit tests. I can even test the new "get_rules" method, by passing it 
+a file, and seeing if I get the expected dictionary. 
+4) Something very important that I forgot about was the script to add vocabulary.
+5) Write the rest of the edit_map() script.
+6) Improve the create_map() script. A less important thing is to implement item properties such as concealed and concealing. A more important thing is to make it
+easier to successfully complete a map. 
+

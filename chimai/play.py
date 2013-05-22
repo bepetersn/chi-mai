@@ -52,9 +52,9 @@ def get_map():
     print "What map do you want to use?"
     print "Possibilities: "
     for map in maps:
-        print map[8:]
+        print map[8:-4]
     while True:
-        map = '../maps/' + raw_input()
+        map = '../maps/' + raw_input() + '.pkl'
         if not isfile(map):
             print "that's not a map!"
         else:
