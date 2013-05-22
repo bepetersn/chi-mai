@@ -1,0 +1,12 @@
+V + OBJ -> S
+V + PP -> S
+N -> OBJ
+NP -> OBJ
+DET + OBJ -> OBJ
+ADJ + OBJ -> OBJ
+TO + OBJ -> PP
+
+P + OBJ -> PP
+N + N -> OBJ
+V -> S
+V + ADV -> S

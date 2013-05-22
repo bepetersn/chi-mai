@@ -1,3 +1,4 @@
+import re
 import json
 import logging 
 import collections
@@ -14,6 +15,21 @@ from errors import QuitException, HelpException, \
 logging.basicConfig(format='%(levelname)s: %(message)s', 
     filename='../logs/chimai.log', filemode='w', level=logging.DEBUG)
 
+def get_rules(f):
+    rules = collections.OrderedDict()
+    rule_pattern = re.compile("([A-Z]+)\s(?:\+\s([A-Z]+)\s)*->\s([A-Z]+)")
+    for line in f.readlines():
+        try:
+            groups = re.match(rule_pattern, line).groups()
+            groups = [group for group in groups if group is not None]
+            parts = groups[:-1]
+            composite = groups[-1]
+            rules[tuple(parts)] = tuple((composite,))
+        except AttributeError as e:
+            continue
+
+    return rules
+
 class Parser:
         
     def __init__(self):
@@ -22,23 +38,8 @@ class Parser:
         self.binder = None
         self.commands = cs.CommandWords()
 
-        self.rules = collections.OrderedDict()
-
-        self.rules[tuple(('V', 'OBJ'))] = tuple(('S',))
-        self.rules[tuple(('V', 'PP'))] = tuple(('S',))
-
-        self.rules[tuple(('N',))] = tuple(('OBJ',))
-        self.rules[tuple(('NP',))] = tuple(('OBJ',))
-
-        self.rules[tuple(('DET', 'OBJ'))] = tuple(('OBJ',))
-        self.rules[tuple(('ADJ', 'OBJ'))] = tuple(('OBJ',))
-
-        self.rules[tuple(('TO', 'OBJ'))] = tuple(('PP',))
-        self.rules[tuple(('P', 'OBJ'))] = tuple(('PP',))
-
-        self.rules[tuple(('N', 'N'))] = tuple(('OBJ',))
-        self.rules[tuple(('V',))] = tuple(('S',))
-        self.rules[tuple(('V', 'ADV'))] = tuple(('S',))
+        with open('rules.txt') as f:
+            self.rules = get_rules(f)
 
         with open('../vocab/part_of_speech.json') as f:
             json_string = f.read()
