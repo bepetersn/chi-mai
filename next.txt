@@ -20,4 +20,5 @@
 
 - Consider limiting the scope of what parser does by a little bit.
 
-- Implement other characters and plot development much more satisfactorily.
+- Implement other characters and plot development (i.e. the change in the state of rooms and other items over time) much more satisfactorily.
+
