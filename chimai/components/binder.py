@@ -1,4 +1,4 @@
-from errors import InaccesibleRoomException, InaccessibleDirException, \
+from chimai.chimai.errors import InaccesibleRoomException, InaccessibleDirException, \
         NoSuchObjectException, NotInInventoryException, ItemNotTakeableException
 
 class Binder:
@@ -8,10 +8,6 @@ class Binder:
         self.rooms = rooms
         self.dirs = ['north', 'south', 'east', 'west', 'up', 'down', \
                         'northwest', 'northeast', 'southwest', 'southeast']
-        self.current_room = player.location
-        self.current_exits = self.current_room.exits
-        self.current_items = self.current_room.items
-        self.current_inventory = self.player.items
 
     def update(self, player, rooms):
         self.player = player

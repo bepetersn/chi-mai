@@ -1,231 +1,5 @@
-INFO:root:multiply_tagged_tokens: [('go', ['V', 'N']), ('into', ['P', 'NIL']), ('book', ['N', 'NP', 'V'])]
-INFO:root:tagsets: [['V', 'N'], ['P', 'NIL'], ['N', 'NP', 'V']]
-INFO:root:tagset lengths: [2, 2, 3]
-INFO:root:working: [0, 0, 0]
-INFO:root:old working: []
-INFO:root:back stack: []
-INFO:root:starting loopy-loop
-INFO:root:finding a possible tag combination
-INFO:root:word #: 1
-INFO:root:tags for the word: ['V', 'N']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: V
-INFO:root:word #: 2
-INFO:root:tags for the word: ['P', 'NIL']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: P
-INFO:root:word #: 3
-INFO:root:tags for the word: ['N', 'NP', 'V']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: N
-INFO:root:tagset we're using this time: ['V', 'P', 'N']
-INFO:root:multiply tagged tokens: [('go', ['V', 'N']), ('into', ['P', 'NIL']), ('book', ['N', 'NP', 'V'])]
-INFO:root:we're going to try to get a reduced parse
-INFO:root:entering mtt into backstack: []
-INFO:root:we're gonna check against rules;
-INFO:root:if it matches any, we'll return the reduced tagged tokens;
-INFO:root:if it doesn't, we'll drop the leftmost tag...
-INFO:root:until the tags are empty--then we'll try a different possible tagset.
-INFO:root:('V', 'P', 'N') and ('V', 'OBJ')
-INFO:root:('V', 'P', 'N') and ('V', 'PP')
-INFO:root:('V', 'P', 'N') and ('N',)
-INFO:root:('V', 'P', 'N') and ('NP',)
-INFO:root:('V', 'P', 'N') and ('DET', 'OBJ')
-INFO:root:('V', 'P', 'N') and ('ADJ', 'OBJ')
-INFO:root:('V', 'P', 'N') and ('TO', 'OBJ')
-INFO:root:('V', 'P', 'N') and ('P', 'OBJ')
-INFO:root:('V', 'P', 'N') and ('N', 'N')
-INFO:root:('V', 'P', 'N') and ('V',)
-INFO:root:('V', 'P', 'N') and ('V', 'ADV')
-INFO:root:no match, dropping leftmost tag
-INFO:root:('P', 'N') and ('V', 'OBJ')
-INFO:root:('P', 'N') and ('V', 'PP')
-INFO:root:('P', 'N') and ('N',)
-INFO:root:('P', 'N') and ('NP',)
-INFO:root:('P', 'N') and ('DET', 'OBJ')
-INFO:root:('P', 'N') and ('ADJ', 'OBJ')
-INFO:root:('P', 'N') and ('TO', 'OBJ')
-INFO:root:('P', 'N') and ('P', 'OBJ')
-INFO:root:('P', 'N') and ('N', 'N')
-INFO:root:('P', 'N') and ('V',)
-INFO:root:('P', 'N') and ('V', 'ADV')
-INFO:root:no match, dropping leftmost tag
-INFO:root:('N',) and ('V', 'OBJ')
-INFO:root:('N',) and ('V', 'PP')
-INFO:root:('N',) and ('N',)
-INFO:root:found a rule that matches
-INFO:root:getting slightly closer parse
-INFO:root:parts of rule: ('N',)
-INFO:root:composite of rule: ('OBJ',)
-INFO:root:num tags we're replacing: 1
-INFO:root:num tags in the whole sentence: 3
-INFO:root:everything we're replacing: [('book', ['N', 'NP', 'V'])]
-INFO:root:one singly, correctly tagged token: ('book', 'N')
-INFO:root:added it to our list of stt's
-INFO:root:new mtt, after removing some stuff: [('go', ['V', 'N']), ('into', ['P', 'NIL'])]
-INFO:root:this is what we're adding to mtt in place of what we're removing: (('book', 'N'), ('OBJ',))
-INFO:root:new mtt, after adding some stuff: [('go', ['V', 'N']), ('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))]
-INFO:root:backstack: [([('go', ['V', 'N']), ('into', ['P', 'NIL']), ('book', ['N', 'NP', 'V'])], [0, 0, 0])]
-INFO:root:we found a reduced parse: [('go', ['V', 'N']), ('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))]
-INFO:root:we're going to reset our iterations over the tagsets.
-INFO:root:tagsets: [['V', 'N'], ['P', 'NIL'], ('OBJ',)]
-INFO:root:tagset lengths: [2, 2, 1]
-INFO:root:old working: [0, 0, 0]
-INFO:root:new working: [0, 0, 0]
-INFO:root:mtt: [('go', ['V', 'N']), ('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))]
-INFO:root:starting loopy-loop
-INFO:root:finding a possible tag combination
-INFO:root:word #: 1
-INFO:root:tags for the word: ['V', 'N']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: V
-INFO:root:word #: 2
-INFO:root:tags for the word: ['P', 'NIL']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: P
-INFO:root:word #: 3
-INFO:root:tags for the word: ('OBJ',)
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: OBJ
-INFO:root:tagset we're using this time: ['V', 'P', 'OBJ']
-INFO:root:multiply tagged tokens: [('go', ['V', 'N']), ('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))]
-INFO:root:we're going to try to get a reduced parse
-INFO:root:entering mtt into backstack: [([('go', ['V', 'N']), ('into', ['P', 'NIL']), ('book', ['N', 'NP', 'V'])], [0, 0, 0])]
-INFO:root:we're gonna check against rules;
-INFO:root:if it matches any, we'll return the reduced tagged tokens;
-INFO:root:if it doesn't, we'll drop the leftmost tag...
-INFO:root:until the tags are empty--then we'll try a different possible tagset.
-INFO:root:('V', 'P', 'OBJ') and ('V', 'OBJ')
-INFO:root:('V', 'P', 'OBJ') and ('V', 'PP')
-INFO:root:('V', 'P', 'OBJ') and ('N',)
-INFO:root:('V', 'P', 'OBJ') and ('NP',)
-INFO:root:('V', 'P', 'OBJ') and ('DET', 'OBJ')
-INFO:root:('V', 'P', 'OBJ') and ('ADJ', 'OBJ')
-INFO:root:('V', 'P', 'OBJ') and ('TO', 'OBJ')
-INFO:root:('V', 'P', 'OBJ') and ('P', 'OBJ')
-INFO:root:('V', 'P', 'OBJ') and ('N', 'N')
-INFO:root:('V', 'P', 'OBJ') and ('V',)
-INFO:root:('V', 'P', 'OBJ') and ('V', 'ADV')
-INFO:root:no match, dropping leftmost tag
-INFO:root:('P', 'OBJ') and ('V', 'OBJ')
-INFO:root:('P', 'OBJ') and ('V', 'PP')
-INFO:root:('P', 'OBJ') and ('N',)
-INFO:root:('P', 'OBJ') and ('NP',)
-INFO:root:('P', 'OBJ') and ('DET', 'OBJ')
-INFO:root:('P', 'OBJ') and ('ADJ', 'OBJ')
-INFO:root:('P', 'OBJ') and ('TO', 'OBJ')
-INFO:root:('P', 'OBJ') and ('P', 'OBJ')
-INFO:root:found a rule that matches
-INFO:root:getting slightly closer parse
-INFO:root:parts of rule: ('P', 'OBJ')
-INFO:root:composite of rule: ('PP',)
-INFO:root:num tags we're replacing: 2
-INFO:root:num tags in the whole sentence: 3
-INFO:root:everything we're replacing: [('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))]
-INFO:root:one singly, correctly tagged token: ('into', 'P')
-INFO:root:added it to our list of stt's
-INFO:root:one singly, correctly tagged token: (('book', 'N'), 'OBJ')
-INFO:root:added it to our list of stt's
-INFO:root:new mtt, after removing some stuff: [('go', ['V', 'N']), (('book', 'N'), ('OBJ',))]
-INFO:root:new mtt, after removing some stuff: [('go', ['V', 'N'])]
-INFO:root:this is what we're adding to mtt in place of what we're removing: ((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))
-INFO:root:new mtt, after adding some stuff: [('go', ['V', 'N']), ((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))]
-INFO:root:backstack: [([('go', ['V', 'N']), ('into', ['P', 'NIL']), ('book', ['N', 'NP', 'V'])], [0, 0, 0]), ([('go', ['V', 'N']), ('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))], [0, 0, 0])]
-INFO:root:we found a reduced parse: [('go', ['V', 'N']), ((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))]
-INFO:root:we're going to reset our iterations over the tagsets.
-INFO:root:tagsets: [['V', 'N'], ('PP',)]
-INFO:root:tagset lengths: [2, 1]
-INFO:root:old working: [0, 0, 0]
-INFO:root:new working: [0, 0]
-INFO:root:mtt: [('go', ['V', 'N']), ((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))]
-INFO:root:starting loopy-loop
-INFO:root:finding a possible tag combination
-INFO:root:word #: 1
-INFO:root:tags for the word: ['V', 'N']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: V
-INFO:root:word #: 2
-INFO:root:tags for the word: ('PP',)
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: PP
-INFO:root:tagset we're using this time: ['V', 'PP']
-INFO:root:multiply tagged tokens: [('go', ['V', 'N']), ((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))]
-INFO:root:we're going to try to get a reduced parse
-INFO:root:entering mtt into backstack: [([('go', ['V', 'N']), ('into', ['P', 'NIL']), ('book', ['N', 'NP', 'V'])], [0, 0, 0]), ([('go', ['V', 'N']), ('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))], [0, 0, 0])]
-INFO:root:we're gonna check against rules;
-INFO:root:if it matches any, we'll return the reduced tagged tokens;
-INFO:root:if it doesn't, we'll drop the leftmost tag...
-INFO:root:until the tags are empty--then we'll try a different possible tagset.
-INFO:root:('V', 'PP') and ('V', 'OBJ')
-INFO:root:('V', 'PP') and ('V', 'PP')
-INFO:root:found a rule that matches
-INFO:root:getting slightly closer parse
-INFO:root:parts of rule: ('V', 'PP')
-INFO:root:composite of rule: ('S',)
-INFO:root:num tags we're replacing: 2
-INFO:root:num tags in the whole sentence: 2
-INFO:root:everything we're replacing: [('go', ['V', 'N']), ((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))]
-INFO:root:one singly, correctly tagged token: ('go', 'V')
-INFO:root:added it to our list of stt's
-INFO:root:one singly, correctly tagged token: ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP')
-INFO:root:added it to our list of stt's
-INFO:root:new mtt, after removing some stuff: [((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))]
-INFO:root:new mtt, after removing some stuff: []
-INFO:root:this is what we're adding to mtt in place of what we're removing: ((('go', 'V'), ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP')), ('S',))
-INFO:root:new mtt, after adding some stuff: [((('go', 'V'), ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP')), ('S',))]
-INFO:root:backstack: [([('go', ['V', 'N']), ('into', ['P', 'NIL']), ('book', ['N', 'NP', 'V'])], [0, 0, 0]), ([('go', ['V', 'N']), ('into', ['P', 'NIL']), (('book', 'N'), ('OBJ',))], [0, 0, 0]), ([('go', ['V', 'N']), ((('into', 'P'), (('book', 'N'), 'OBJ')), ('PP',))], [0, 0])]
-INFO:root:we found a reduced parse: [((('go', 'V'), ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP')), ('S',))]
-INFO:root:we're going to reset our iterations over the tagsets.
-INFO:root:tagsets: [('S',)]
-INFO:root:tagset lengths: [1]
-INFO:root:old working: [0, 0]
-INFO:root:new working: [0]
-INFO:root:mtt: [((('go', 'V'), ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP')), ('S',))]
-INFO:root:we have successfully parsed a sentence!
-INFO:root:tree: ((('go', 'V'), ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP')), ('S',))
-INFO:root:drop the rightmost tag, 'S' for 'sentence'
-INFO:root:tree: (('go', 'V'), ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP'))
-INFO:root:checking that two layers down is not a single char,
-INFO:root:in other words, 'tree' is not a simple tuple itself.
-WARNING:root:This will fail with a word like 'a', or 'I'
-INFO:root:added: ('go', 'V')
-INFO:root:shorten the tree
-INFO:root:tree: ((('into', 'P'), (('book', 'N'), 'OBJ')), 'PP')
-INFO:root:prep tree for next time by dropping rightmost tag, if there is one
-INFO:root:tree: (('into', 'P'), (('book', 'N'), 'OBJ'))
-INFO:root:added: ('into', 'P')
-INFO:root:shorten the tree
-INFO:root:tree: (('book', 'N'), 'OBJ')
-INFO:root:prep tree for next time by dropping rightmost tag, if there is one
-INFO:root:tree: ('book', 'N')
-INFO:root:if tree contains anything, it is the last tagged token.
-INFO:root:so append it to the 'tagged_tokens'.
-INFO:root:added: ('book', 'N')
-INFO:root:[('go', 'V'), ('into', 'P'), ('book', 'N')]
-INFO:root:0, go, V
-INFO:root:it's a verb!
-INFO:root:1, into, P
-INFO:root:don't care, not a verb or noun
-INFO:root:2, book, N
-INFO:root:it's a noun!
-DEBUG:root:verb: go, object: <Room: 
-name: 'hyperion', 
-description: 'you are looking out on a sunset on an alien world.', 
-id: '1'
-items: {[Takeable { name: 'rocks', location: '1', desc: 'just some rocks...' }]}, 
-exits: {[<Exit: <name: 'book', direction: 'down', room you end in: '1'>, <Exit: <name: 'outside', direction: 'out', room you end in: '0'>]}
->
-
-INFO:root:multiply_tagged_tokens: [('go', ['V', 'N']), ('west', ['N', 'ADJ', 'NP'])]
-INFO:root:tagsets: [['V', 'N'], ['N', 'ADJ', 'NP']]
+INFO:root:multiply_tagged_tokens: [('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])]
+INFO:root:tagsets: [['V', 'N'], ['N', 'NP', 'V']]
 INFO:root:tagset lengths: [2, 3]
 INFO:root:working: [0, 0]
 INFO:root:old working: []
@@ -238,12 +12,12 @@ INFO:root:select next tag from above tags
 INFO:root:tag #: 1
 INFO:root:tag: V
 INFO:root:word #: 2
-INFO:root:tags for the word: ['N', 'ADJ', 'NP']
+INFO:root:tags for the word: ['N', 'NP', 'V']
 INFO:root:select next tag from above tags
 INFO:root:tag #: 1
 INFO:root:tag: N
 INFO:root:tagset we're using this time: ['V', 'N']
-INFO:root:multiply tagged tokens: [('go', ['V', 'N']), ('west', ['N', 'ADJ', 'NP'])]
+INFO:root:multiply tagged tokens: [('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])]
 INFO:root:we're going to try to get a reduced parse
 INFO:root:entering mtt into backstack: []
 INFO:root:we're gonna check against rules;
@@ -271,20 +45,20 @@ INFO:root:parts of rule: ('N',)
 INFO:root:composite of rule: ('OBJ',)
 INFO:root:num tags we're replacing: 1
 INFO:root:num tags in the whole sentence: 2
-INFO:root:everything we're replacing: [('west', ['N', 'ADJ', 'NP'])]
-INFO:root:one singly, correctly tagged token: ('west', 'N')
+INFO:root:everything we're replacing: [('book', ['N', 'NP', 'V'])]
+INFO:root:one singly, correctly tagged token: ('book', 'N')
 INFO:root:added it to our list of stt's
-INFO:root:new mtt, after removing some stuff: [('go', ['V', 'N'])]
-INFO:root:this is what we're adding to mtt in place of what we're removing: (('west', 'N'), ('OBJ',))
-INFO:root:new mtt, after adding some stuff: [('go', ['V', 'N']), (('west', 'N'), ('OBJ',))]
-INFO:root:backstack: [([('go', ['V', 'N']), ('west', ['N', 'ADJ', 'NP'])], [0, 0])]
-INFO:root:we found a reduced parse: [('go', ['V', 'N']), (('west', 'N'), ('OBJ',))]
+INFO:root:new mtt, after removing some stuff: [('take', ['V', 'N'])]
+INFO:root:this is what we're adding to mtt in place of what we're removing: (('book', 'N'), ('OBJ',))
+INFO:root:new mtt, after adding some stuff: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
+INFO:root:backstack: [([('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])], [0, 0])]
+INFO:root:we found a reduced parse: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
 INFO:root:we're going to reset our iterations over the tagsets.
 INFO:root:tagsets: [['V', 'N'], ('OBJ',)]
 INFO:root:tagset lengths: [2, 1]
 INFO:root:old working: [0, 0]
 INFO:root:new working: [0, 0]
-INFO:root:mtt: [('go', ['V', 'N']), (('west', 'N'), ('OBJ',))]
+INFO:root:mtt: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
 INFO:root:starting loopy-loop
 INFO:root:finding a possible tag combination
 INFO:root:word #: 1
@@ -298,9 +72,9 @@ INFO:root:select next tag from above tags
 INFO:root:tag #: 1
 INFO:root:tag: OBJ
 INFO:root:tagset we're using this time: ['V', 'OBJ']
-INFO:root:multiply tagged tokens: [('go', ['V', 'N']), (('west', 'N'), ('OBJ',))]
+INFO:root:multiply tagged tokens: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
 INFO:root:we're going to try to get a reduced parse
-INFO:root:entering mtt into backstack: [([('go', ['V', 'N']), ('west', ['N', 'ADJ', 'NP'])], [0, 0])]
+INFO:root:entering mtt into backstack: [([('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])], [0, 0])]
 INFO:root:we're gonna check against rules;
 INFO:root:if it matches any, we'll return the reduced tagged tokens;
 INFO:root:if it doesn't, we'll drop the leftmost tag...
@@ -312,40 +86,41 @@ INFO:root:parts of rule: ('V', 'OBJ')
 INFO:root:composite of rule: ('S',)
 INFO:root:num tags we're replacing: 2
 INFO:root:num tags in the whole sentence: 2
-INFO:root:everything we're replacing: [('go', ['V', 'N']), (('west', 'N'), ('OBJ',))]
-INFO:root:one singly, correctly tagged token: ('go', 'V')
+INFO:root:everything we're replacing: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
+INFO:root:one singly, correctly tagged token: ('take', 'V')
 INFO:root:added it to our list of stt's
-INFO:root:one singly, correctly tagged token: (('west', 'N'), 'OBJ')
+INFO:root:one singly, correctly tagged token: (('book', 'N'), 'OBJ')
 INFO:root:added it to our list of stt's
-INFO:root:new mtt, after removing some stuff: [(('west', 'N'), ('OBJ',))]
+INFO:root:new mtt, after removing some stuff: [(('book', 'N'), ('OBJ',))]
 INFO:root:new mtt, after removing some stuff: []
-INFO:root:this is what we're adding to mtt in place of what we're removing: ((('go', 'V'), (('west', 'N'), 'OBJ')), ('S',))
-INFO:root:new mtt, after adding some stuff: [((('go', 'V'), (('west', 'N'), 'OBJ')), ('S',))]
-INFO:root:backstack: [([('go', ['V', 'N']), ('west', ['N', 'ADJ', 'NP'])], [0, 0]), ([('go', ['V', 'N']), (('west', 'N'), ('OBJ',))], [0, 0])]
-INFO:root:we found a reduced parse: [((('go', 'V'), (('west', 'N'), 'OBJ')), ('S',))]
+INFO:root:this is what we're adding to mtt in place of what we're removing: ((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))
+INFO:root:new mtt, after adding some stuff: [((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))]
+INFO:root:backstack: [([('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])], [0, 0]), ([('take', ['V', 'N']), (('book', 'N'), ('OBJ',))], [0, 0])]
+INFO:root:we found a reduced parse: [((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))]
 INFO:root:we're going to reset our iterations over the tagsets.
 INFO:root:tagsets: [('S',)]
 INFO:root:tagset lengths: [1]
 INFO:root:old working: [0, 0]
 INFO:root:new working: [0]
-INFO:root:mtt: [((('go', 'V'), (('west', 'N'), 'OBJ')), ('S',))]
+INFO:root:mtt: [((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))]
 INFO:root:we have successfully parsed a sentence!
-INFO:root:tree: ((('go', 'V'), (('west', 'N'), 'OBJ')), ('S',))
+INFO:root:tree: ((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))
 INFO:root:drop the rightmost tag, 'S' for 'sentence'
-INFO:root:tree: (('go', 'V'), (('west', 'N'), 'OBJ'))
+INFO:root:tree: (('take', 'V'), (('book', 'N'), 'OBJ'))
 INFO:root:checking that two layers down is not a single char,
 INFO:root:in other words, 'tree' is not a simple tuple itself.
 WARNING:root:This will fail with a word like 'a', or 'I'
-INFO:root:added: ('go', 'V')
+INFO:root:added: ('take', 'V')
 INFO:root:shorten the tree
-INFO:root:tree: (('west', 'N'), 'OBJ')
+INFO:root:tree: (('book', 'N'), 'OBJ')
 INFO:root:prep tree for next time by dropping rightmost tag, if there is one
-INFO:root:tree: ('west', 'N')
+INFO:root:tree: ('book', 'N')
 INFO:root:if tree contains anything, it is the last tagged token.
 INFO:root:so append it to the 'tagged_tokens'.
-INFO:root:added: ('west', 'N')
-INFO:root:[('go', 'V'), ('west', 'N')]
-INFO:root:0, go, V
+INFO:root:added: ('book', 'N')
+INFO:root:[('take', 'V'), ('book', 'N')]
+INFO:root:0, take, V
 INFO:root:it's a verb!
-INFO:root:1, west, N
+INFO:root:1, book, N
 INFO:root:it's a noun!
+DEBUG:root:verb: take, object: <type 'object'>

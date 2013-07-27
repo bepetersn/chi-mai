@@ -1,9 +1,9 @@
 - In the parser, instead of making a tree out of confusing sets of tuples, use pyTree, or my own data structure 
   to encode sentence structure.
 
-- Build unit tests for each of the components of the parser. Since it is the most likely thing to break, 
+- Build unit tests for each of the STEPS of the parser. Since it is the most likely thing to break, 
   these unit tests are most important. However, for example: I should have unit tests to verify 
-  "matches_any_rules()", "reduce_by_rule()", "unpack_tree()", and "find_verb_and_object()". These functionalities 
+  "depunctuate()", "tokenize()", "find_all_tags()", "reduce_by_rule", and "find_verb_and_object()". These functionalities 
   are all fairly separate and independent. There may be a few others like this as well. For example, I may be able
   to test whether "try_to_reduce()" produces at least a few expected outputs. Then there's non-parsing methods--
   these should all be rock-solid with their unit tests. I can even test the new "get_rules" method, by passing it 
@@ -11,14 +11,19 @@
 
 - Create the script to add vocabulary.
 
-- Write the rest of the edit_map() script.
+- Write the edit_map() script.
 
 - Make it easier to successfully complete a map. I think the best way is to create a small tkinter app. 
   This will be much easier than to devise a text-based object-creation system from scratch. 
   
 - Refactor object hierarchy along a has-a instead of an is-a paradigm, which makes a lot more sense.
 
-- Consider limiting the scope of what parser does by a little bit.
+- Abstract the shit out of the binder, such that all verbs are categorized by what kinds of objects they can take:
+    ---- verbs that take objects in the room (i.e. take, attack)
+    ---- verbs that take objects in player's inventory (i.e. drop)
+    ---- verbs that take both (i.e. look)
+    ---- verbs that take neither (i.e. intentory, dance, yawn)
+    ---- (possibly?) the verb that takes exits/directions (i.e. go) if I don't feel like abstracting away the interface for exit object
 
 - Implement other characters and plot development (i.e. the change in the state of rooms and other items over time) much more satisfactorily.
 

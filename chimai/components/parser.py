@@ -3,14 +3,12 @@ import json
 import logging 
 import collections
 import string
-from treelib import Node, Tree
 
-import components.commands as cs
-import objects.command as c
+from chimai.chimai.errors import QuitException, FailedParseException, \
+UnknownWordException, NoCommandException, HelpException
 
-from errors import QuitException, HelpException, \
-    FailedParseException, UnknownWordException, \
-    NoCommandException, UnknownCommandException
+from treelib.node import Node 
+from treelib.tree import Tree
 
 logging.basicConfig(filename='../logs/chimai.log', filemode='w', level=logging.DEBUG)
 
@@ -33,32 +31,25 @@ class Parser:
         
     def __init__(self):
         self.vocab = {}
-        self.actions = []
-        self.binder = None
-        self.commands = cs.CommandWords()
 
         with open('rules.txt') as f:
             self.rules = get_rules(f)
 
         with open('../vocab/parts_of_speech.json') as f:
             json_string = f.read()
-
-        self.vocab = json.loads(json_string)
+            self.vocab = json.loads(json_string)
 
     def get_command(self):
-        line = raw_input().lower()
+        line = raw_input()
+        line = self.depunctuate(line)
         tokens = self.tokenize(line)
         tagged_tokens = self.parse(tokens)
         verb, object_name = self.find_verb_and_object(tagged_tokens)
-        action = self.get_action(verb)
-        object = self.get_object(object_name, action[0])
         logging.debug("verb: %s, object: %s" % (verb, object))
-        return c.Command(verb, action[1], object)
+        return (verb, object_name)
 
     def tokenize(self, line):
-        line = self.depunctuate(line)
-        line = line.strip().split(" ")
-        return line 
+        return line.lower().strip().split(" ")
 
     def depunctuate(self, line):
         for char in line:
@@ -410,13 +401,3 @@ class Parser:
                 return verb, None
 
         return verb, object
-
-    def get_object(self, object_name, action_name):
-        if object_name:
-            return self.binder.get_object(object_name, action_name)
-
-    def get_action(self, verb):
-        for i, command in enumerate(self.commands.instance):
-            if verb == command:
-                return self.actions[i]
-        raise UnknownCommandException(verb)

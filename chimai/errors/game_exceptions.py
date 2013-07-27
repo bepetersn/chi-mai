@@ -1,18 +1,8 @@
-import components.commands as commands
+from chimai.chimai.components.commands import CommandWords
 
 class GameException(Exception):
 	def __init__(self):
 		self.message = ""
-
-class HelpException(GameException):
-    def __init__(self):
-        cs = commands.CommandWords()
-        self.message = "Here is a list of commands you have at your disposal: \n"
-        num_commands = len(cs.instance)
-        for i, command in enumerate(cs.instance):
-            self.message += command
-            if not i == (num_commands-1):
-                self.message += "\n"
 
 class FailedParseException(GameException):
     def __init__(self):
@@ -48,12 +38,15 @@ class UnknownCommandException(GameException):
         if verb == 'quit':
             self.message += (" Unless you were trying to exit the game." 
                 " In that case, type 'quit' again, without any trailing words.")
-
         if verb == 'help':
             self.message += (" Unless you were trying to get help."
                 " In that case, type 'help' again, without any trailing words.")
 
+class HelpException(GameException):
+    def __init__(self):
+        cs = CommandWords()
+        self.message = cs.list_commands()
+
 class ItemNotTakeableException(GameException):
     def __init__(self, object_name):
-        self.message = "You can't take that!"
-    
+        self.message = "You can't take the %s!" % object_name
