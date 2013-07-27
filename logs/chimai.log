@@ -1,126 +1,93 @@
-INFO:root:multiply_tagged_tokens: [('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])]
-INFO:root:tagsets: [['V', 'N'], ['N', 'NP', 'V']]
-INFO:root:tagset lengths: [2, 3]
-INFO:root:working: [0, 0]
-INFO:root:old working: []
-INFO:root:back stack: []
-INFO:root:starting loopy-loop
-INFO:root:finding a possible tag combination
-INFO:root:word #: 1
-INFO:root:tags for the word: ['V', 'N']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: V
-INFO:root:word #: 2
-INFO:root:tags for the word: ['N', 'NP', 'V']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: N
-INFO:root:tagset we're using this time: ['V', 'N']
-INFO:root:multiply tagged tokens: [('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])]
-INFO:root:we're going to try to get a reduced parse
-INFO:root:entering mtt into backstack: []
-INFO:root:we're gonna check against rules;
-INFO:root:if it matches any, we'll return the reduced tagged tokens;
-INFO:root:if it doesn't, we'll drop the leftmost tag...
-INFO:root:until the tags are empty--then we'll try a different possible tagset.
-INFO:root:('V', 'N') and ('V', 'OBJ')
-INFO:root:('V', 'N') and ('V', 'PP')
-INFO:root:('V', 'N') and ('N',)
-INFO:root:('V', 'N') and ('NP',)
-INFO:root:('V', 'N') and ('DET', 'OBJ')
-INFO:root:('V', 'N') and ('ADJ', 'OBJ')
-INFO:root:('V', 'N') and ('TO', 'OBJ')
-INFO:root:('V', 'N') and ('P', 'OBJ')
-INFO:root:('V', 'N') and ('N', 'N')
-INFO:root:('V', 'N') and ('V',)
-INFO:root:('V', 'N') and ('V', 'ADV')
-INFO:root:no match, dropping leftmost tag
-INFO:root:('N',) and ('V', 'OBJ')
-INFO:root:('N',) and ('V', 'PP')
-INFO:root:('N',) and ('N',)
-INFO:root:found a rule that matches
-INFO:root:getting slightly closer parse
-INFO:root:parts of rule: ('N',)
-INFO:root:composite of rule: ('OBJ',)
-INFO:root:num tags we're replacing: 1
-INFO:root:num tags in the whole sentence: 2
-INFO:root:everything we're replacing: [('book', ['N', 'NP', 'V'])]
-INFO:root:one singly, correctly tagged token: ('book', 'N')
-INFO:root:added it to our list of stt's
-INFO:root:new mtt, after removing some stuff: [('take', ['V', 'N'])]
-INFO:root:this is what we're adding to mtt in place of what we're removing: (('book', 'N'), ('OBJ',))
-INFO:root:new mtt, after adding some stuff: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
-INFO:root:backstack: [([('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])], [0, 0])]
-INFO:root:we found a reduced parse: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
-INFO:root:we're going to reset our iterations over the tagsets.
-INFO:root:tagsets: [['V', 'N'], ('OBJ',)]
-INFO:root:tagset lengths: [2, 1]
-INFO:root:old working: [0, 0]
-INFO:root:new working: [0, 0]
-INFO:root:mtt: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
-INFO:root:starting loopy-loop
-INFO:root:finding a possible tag combination
-INFO:root:word #: 1
-INFO:root:tags for the word: ['V', 'N']
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: V
-INFO:root:word #: 2
-INFO:root:tags for the word: ('OBJ',)
-INFO:root:select next tag from above tags
-INFO:root:tag #: 1
-INFO:root:tag: OBJ
-INFO:root:tagset we're using this time: ['V', 'OBJ']
-INFO:root:multiply tagged tokens: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
-INFO:root:we're going to try to get a reduced parse
-INFO:root:entering mtt into backstack: [([('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])], [0, 0])]
-INFO:root:we're gonna check against rules;
-INFO:root:if it matches any, we'll return the reduced tagged tokens;
-INFO:root:if it doesn't, we'll drop the leftmost tag...
-INFO:root:until the tags are empty--then we'll try a different possible tagset.
-INFO:root:('V', 'OBJ') and ('V', 'OBJ')
-INFO:root:found a rule that matches
-INFO:root:getting slightly closer parse
-INFO:root:parts of rule: ('V', 'OBJ')
-INFO:root:composite of rule: ('S',)
-INFO:root:num tags we're replacing: 2
-INFO:root:num tags in the whole sentence: 2
-INFO:root:everything we're replacing: [('take', ['V', 'N']), (('book', 'N'), ('OBJ',))]
-INFO:root:one singly, correctly tagged token: ('take', 'V')
-INFO:root:added it to our list of stt's
-INFO:root:one singly, correctly tagged token: (('book', 'N'), 'OBJ')
-INFO:root:added it to our list of stt's
-INFO:root:new mtt, after removing some stuff: [(('book', 'N'), ('OBJ',))]
-INFO:root:new mtt, after removing some stuff: []
-INFO:root:this is what we're adding to mtt in place of what we're removing: ((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))
-INFO:root:new mtt, after adding some stuff: [((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))]
-INFO:root:backstack: [([('take', ['V', 'N']), ('book', ['N', 'NP', 'V'])], [0, 0]), ([('take', ['V', 'N']), (('book', 'N'), ('OBJ',))], [0, 0])]
-INFO:root:we found a reduced parse: [((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))]
-INFO:root:we're going to reset our iterations over the tagsets.
-INFO:root:tagsets: [('S',)]
-INFO:root:tagset lengths: [1]
-INFO:root:old working: [0, 0]
-INFO:root:new working: [0]
-INFO:root:mtt: [((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))]
-INFO:root:we have successfully parsed a sentence!
-INFO:root:tree: ((('take', 'V'), (('book', 'N'), 'OBJ')), ('S',))
-INFO:root:drop the rightmost tag, 'S' for 'sentence'
-INFO:root:tree: (('take', 'V'), (('book', 'N'), 'OBJ'))
-INFO:root:checking that two layers down is not a single char,
-INFO:root:in other words, 'tree' is not a simple tuple itself.
-WARNING:root:This will fail with a word like 'a', or 'I'
-INFO:root:added: ('take', 'V')
-INFO:root:shorten the tree
-INFO:root:tree: (('book', 'N'), 'OBJ')
-INFO:root:prep tree for next time by dropping rightmost tag, if there is one
-INFO:root:tree: ('book', 'N')
-INFO:root:if tree contains anything, it is the last tagged token.
-INFO:root:so append it to the 'tagged_tokens'.
-INFO:root:added: ('book', 'N')
-INFO:root:[('take', 'V'), ('book', 'N')]
+INFO:root:We're gonna build a tree now...
+INFO:root:tokens: ['go', 'into', 'the', 'dark', 'alley']
+INFO:root:tagsets: [['V', 'N'], ['P', 'NIL'], ['DET', 'ADJ', 'NP', 'NIL', 'NUM'], ['ADJ', 'N', 'NP'], ['N']]
+INFO:root:tagset_lengths: [2, 2, 5, 3, 1]
+INFO:root:working: [0, 0, 0, 0, 0]
+INFO:root:tags for word #1: ['V', 'N']
+INFO:root:creating new node for the word go...
+INFO:root:Since this is the first and root node, we're setting all nodes after to be created underneath
+INFO:root:above: go
+INFO:root:If this is the last token, we'll just stop here.
+Else, we're gonna look ahead at the tag of the next token, to make some intelligent guesses.
+INFO:root:not the last token!
+INFO:root:looking ahead... tag of next token: P
+INFO:root:based on our lookahead, we're gonna try to use the rule that creates this composite: PP0
+INFO:root:we're gonna enter an intermediate node in our tree for that composite
+INFO:root:we're gonna set the new 'above' to be this node too.
+INFO:root:tags for word #2: ['P', 'NIL']
+INFO:root:creating new node for the word into...
+INFO:root:not the last token!
+INFO:root:looking ahead... tag of next token: DET
+INFO:root:based on our lookahead, we're gonna try to use the rule that creates this composite: OBJ1
+INFO:root:we're gonna enter an intermediate node in our tree for that composite
+INFO:root:we're gonna set the new 'above' to be this node too.
+INFO:root:tags for word #3: ['DET', 'ADJ', 'NP', 'NIL', 'NUM']
+INFO:root:creating new node for the word the...
+INFO:root:not the last token!
+INFO:root:looking ahead... tag of next token: ADJ
+INFO:root:based on our lookahead, we're gonna try to use the rule that creates this composite: OBJ2
+INFO:root:we're gonna enter an intermediate node in our tree for that composite
+INFO:root:we're gonna set the new 'above' to be this node too.
+INFO:root:tags for word #4: ['ADJ', 'N', 'NP']
+INFO:root:creating new node for the word dark...
+INFO:root:not the last token!
+INFO:root:looking ahead... tag of next token: N
+INFO:root:based on our lookahead, we're gonna try to use the rule that creates this composite: OBJ3
+INFO:root:we're gonna enter an intermediate node in our tree for that composite
+INFO:root:we're gonna set the new 'above' to be this node too.
+INFO:root:tags for word #5: ['N']
+INFO:root:creating new node for the word alley...
+INFO:root:all done!
+INFO:root:0, go, V
+INFO:root:it's a verb!
+INFO:root:1, into, P
+INFO:root:don't care, not a verb or noun
+INFO:root:2, the, DET
+INFO:root:don't care, not a verb or noun
+INFO:root:3, dark, ADJ
+INFO:root:don't care, not a verb or noun
+INFO:root:4, alley, N
+INFO:root:it's a noun!
+INFO:root:verb: go, object: <type 'object'>
+INFO:root:We're gonna build a tree now...
+INFO:root:tokens: ['take', 'the', 'blue', 'book']
+INFO:root:tagsets: [['V', 'N'], ['DET', 'ADJ', 'NP', 'NIL', 'NUM'], ['ADJ', 'N', 'NP'], ['N', 'NP', 'V']]
+INFO:root:tagset_lengths: [2, 5, 3, 3]
+INFO:root:working: [0, 0, 0, 0]
+INFO:root:tags for word #1: ['V', 'N']
+INFO:root:creating new node for the word take...
+INFO:root:Since this is the first and root node, we're setting all nodes after to be created underneath
+INFO:root:above: take
+INFO:root:If this is the last token, we'll just stop here.
+Else, we're gonna look ahead at the tag of the next token, to make some intelligent guesses.
+INFO:root:not the last token!
+INFO:root:looking ahead... tag of next token: DET
+INFO:root:based on our lookahead, we're gonna try to use the rule that creates this composite: OBJ0
+INFO:root:we're gonna enter an intermediate node in our tree for that composite
+INFO:root:we're gonna set the new 'above' to be this node too.
+INFO:root:tags for word #2: ['DET', 'ADJ', 'NP', 'NIL', 'NUM']
+INFO:root:creating new node for the word the...
+INFO:root:not the last token!
+INFO:root:looking ahead... tag of next token: ADJ
+INFO:root:based on our lookahead, we're gonna try to use the rule that creates this composite: OBJ1
+INFO:root:we're gonna enter an intermediate node in our tree for that composite
+INFO:root:we're gonna set the new 'above' to be this node too.
+INFO:root:tags for word #3: ['ADJ', 'N', 'NP']
+INFO:root:creating new node for the word blue...
+INFO:root:not the last token!
+INFO:root:looking ahead... tag of next token: N
+INFO:root:based on our lookahead, we're gonna try to use the rule that creates this composite: OBJ2
+INFO:root:we're gonna enter an intermediate node in our tree for that composite
+INFO:root:we're gonna set the new 'above' to be this node too.
+INFO:root:tags for word #4: ['N', 'NP', 'V']
+INFO:root:creating new node for the word book...
+INFO:root:all done!
 INFO:root:0, take, V
 INFO:root:it's a verb!
-INFO:root:1, book, N
+INFO:root:1, the, DET
+INFO:root:don't care, not a verb or noun
+INFO:root:2, blue, ADJ
+INFO:root:don't care, not a verb or noun
+INFO:root:3, book, N
 INFO:root:it's a noun!
-DEBUG:root:verb: take, object: <type 'object'>
+INFO:root:verb: take, object: <type 'object'>

@@ -1,3 +1,4 @@
+import chimai
 
 class CommandWords:
     
@@ -16,10 +17,12 @@ class CommandWords:
                 output += "\n"
         print output
 
-    def get_command(self, command):
-        if command in self.instance:
-        	return eval(command)
+    def get_command(self, verb):
+        print verb
+        if verb in self.instance:
+        	return eval(verb)
         # ridiculous recursive imports forced me to do this:
+        raw_input()
         raise chimai.chimai.errors.game_exceptions.UnknownCommandException(verb)
 
 #########################################################
@@ -56,7 +59,7 @@ def inventory(player, val=None):
 def jump(player, val=None):
     print "Are you having fun?"
 
-    def talk(self, player, person):
+    def talk(player, person):
         if not person:
         	print "Talk about what? Are you going crazy?"
         else:

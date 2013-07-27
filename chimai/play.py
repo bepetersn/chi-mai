@@ -21,12 +21,12 @@ def play():
         try: 
             verb, object_name = parser.get_command()
             game_object = binder.get_object(object_name, verb) if object_name else None
+            execute(verb, game_object)
         except QuitException:
             break
         except GameException as err:
             print err.message
             continue
-        execute(verb, game_object)
         post_process()
 
     print "Thanks for playing!"

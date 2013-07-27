@@ -1,5 +1,6 @@
 V + OBJ -> S
 V + PP -> S
+V + ADVP -> S
 
 N -> OBJ
 NP -> OBJ
@@ -9,6 +10,8 @@ ADJ + OBJ -> OBJ
 TO + OBJ -> PP
 P + OBJ -> PP
 
+ADV -> ADVP
+ADV + OBJ -> ADVP
+
 N + N -> OBJ
 V -> S
-V + ADV -> S
